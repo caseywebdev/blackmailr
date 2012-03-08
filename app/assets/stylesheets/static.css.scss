@@ -1,3 +1,34 @@
-@import "_base"
+@import "_base";
 
-
+body {
+	background: #333 $noise;
+}
+#header {
+	height: 130px;
+	background: url("logo.png") left center no-repeat;
+}
+#wrap {
+	margin: 0 auto;
+	width: 800px;
+}
+#main {
+	background: #fff $noise;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, .5);
+	h1 {
+		margin: 0;
+		padding: 25px;
+		color: #fff;
+		@include text-shadow;
+		background: $main-color $noise;
+	}
+	a {
+		color: $main-color;
+		cursor: pointer;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	.content {
+		padding: 25px;
+	}
+}

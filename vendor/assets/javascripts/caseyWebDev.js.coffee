@@ -15,10 +15,13 @@ if not caseyWebDev? and jQuery?
 			for k, v of @
 				v?.load?()
 			@dom()
-			$("body").on "DOMSubtreeModified", => @dom()
+			$("body").on "DOMSubtreeModified", => @dom() if not @domLocked
 		@dom: ->
+			@domLocked = true
 			for k, v of @
 				v?.dom?()
+			@domLocked = false
+		@domLocked = false
 		@abortXhr: ->
 			for k, v of @
 				v?.abortXhr?()

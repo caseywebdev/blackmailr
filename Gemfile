@@ -15,6 +15,9 @@ gem "haml-rails"
 # Email validation
 gem "validate_email"
 
+# Ruby ImageMagick (for showing just a piece of the picture)
+gem "rmagick"
+
 group :assets do
   gem "sass-rails"
   gem "coffee-rails"

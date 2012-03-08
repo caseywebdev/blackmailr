@@ -1,0 +1,11 @@
+!!!
+%html
+	%head
+		%title Blackmailr | Get what you want, when you want it, or else...
+		= stylesheet_link_tag "application", :media => "all"
+		= javascript_include_tag "application"
+		= csrf_meta_tags
+	%body
+		#wrap
+			#header
+			#main= yield
