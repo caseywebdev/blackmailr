@@ -1,6 +1,8 @@
 Blackmailr::Application.routes.draw do
   root to: "static#index"
-
+	
+	get "*bad_path" => redirect("/")
+	
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
