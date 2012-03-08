@@ -1,0 +1,5 @@
+$orange: #d40;
+$dark-orange: darken($orange, 10%);
+$light-orange: lighten($orange, 40%);
+
+@import "compass/utilities";

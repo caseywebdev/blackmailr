@@ -24,6 +24,7 @@ group :assets do
   gem "uglifier"
   gem "compass-rails"
 	gem "jquery-rails"
+  gem "compass-rails"
 end
 
 group :development, :test do
