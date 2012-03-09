@@ -3,31 +3,41 @@
 body {
 	background: #333 $noise;
 }
+
 #header {
-	height: 130px;
+	position: relative;
+	margin-bottom: -25px;
+	height: 110px;
 	background: url("logo.png") left center no-repeat;
 }
+
 #wrap {
 	margin: 0 auto;
 	width: 800px;
 }
+
 #main {
 	background: #fff $noise;
-	box-shadow: 0 1px 5px rgba(0, 0, 0, .5);
+	@include single-box-shadow;
+	
 	h1 {
 		margin: 0;
 		padding: 25px;
 		color: #fff;
-		@include text-shadow;
 		background: $main-color $noise;
+		@include single-text-shadow;
 	}
+	
 	a {
 		color: $main-color;
 		cursor: pointer;
+		@include hover-link;
+		
+		&:active {
+			color: $main-color-dark;
+		}
 	}
-	a:hover {
-		text-decoration: underline;
-	}
+	
 	.content {
 		padding: 25px;
 	}
