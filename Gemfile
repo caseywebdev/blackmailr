@@ -3,6 +3,9 @@ source "https://rubygems.org"
 # Rails
 gem "rails"
 
+# SQLite
+gem "sqlite3"
+
 # For has_secure_password
 gem "bcrypt-ruby"
 
@@ -19,26 +22,38 @@ gem "validate_email"
 gem "rmagick"
 
 group :assets do
+	# SCSS
   gem "sass-rails"
+  
+  # CoffeeScript
   gem "coffee-rails"
+  
+  # JS minifier
   gem "uglifier"
+  
+  # Compass CSS
   gem "compass-rails"
+  
+  # jQuery
 	gem "jquery-rails"
-  gem "compass-rails"
 end
 
 group :development, :test do
-	gem "sqlite3"
+	# Rspec
 	gem "rspec-rails"
+	
+	# Guard (better than autotest IMO)
   gem "guard-bundler"
   gem "guard-rspec"
   gem "guard-spork"
+  
+  # Growl is OS X only...
 	gem "growl"
   gem "rb-fsevent"
+  
+  # Syntax highlighting in Rspec reports
   gem "syntax"
+  
+  # Fancy dancy selector support in tests
   gem "capybara"
-end
-
-group :production do
-	gem "pg"
 end
