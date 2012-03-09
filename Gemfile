@@ -3,9 +3,6 @@ source "https://rubygems.org"
 # Rails
 gem "rails"
 
-# SQLite
-gem "sqlite3"
-
 # For has_secure_password
 gem "bcrypt-ruby"
 
@@ -21,24 +18,14 @@ gem "validate_email"
 # Ruby ImageMagick (for showing just a piece of the picture)
 gem "rmagick"
 
-group :assets do
-	# SCSS
-  gem "sass-rails"
-  
-  # CoffeeScript
-  gem "coffee-rails"
-  
-  # JS minifier
-  gem "uglifier"
-  
-  # Compass CSS
-  gem "compass-rails"
-  
-  # jQuery
-	gem "jquery-rails"
-end
+# SQLite
+gem "sqlite3", group: [:development, :test]
 
-group :development, :test do
+# PostgreSQL
+gem "pg", group: [:production]
+
+# Testing gems
+group :test do
 	# Rspec
 	gem "rspec-rails"
 	
@@ -56,4 +43,22 @@ group :development, :test do
   
   # Fancy dancy selector support in tests
   gem "capybara"
+end
+
+# Asset handlers
+group :assets do
+	# SCSS
+  gem "sass-rails"
+  
+  # CoffeeScript
+  gem "coffee-rails"
+  
+  # JS minifier
+  gem "uglifier"
+  
+  # Compass CSS
+  gem "compass-rails"
+  
+  # jQuery
+	gem "jquery-rails"
 end

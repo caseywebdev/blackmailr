@@ -16,3 +16,6 @@
 
 # Ignore binstubs
 /bin
+
+# Ignore Rspec html results
+/spec/spec_results.html
