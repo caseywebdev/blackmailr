@@ -4,7 +4,7 @@
 $main-color: #ad2f1a;
 $main-color-dark: darken($main-color, 10%);
 $main-color-light: lighten($main-color, 40%);
-$noise: url("noise.png");
+$noise: image-url("noise.png");
 
 // Default text-shadow values
 $default-text-shadow-color: rgba(0, 0, 0, .5);
