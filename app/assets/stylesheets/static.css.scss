@@ -1,44 +1,44 @@
 @import "_base";
 
 body {
-	background: #333 $noise;
+  background: #333 $noise;
 }
 
 #header {
-	position: relative;
-	margin-bottom: -25px;
-	height: 110px;
-	background: image-url("logo.png") left center no-repeat;
+  position: relative;
+  margin-bottom: -25px;
+  height: 110px;
+  background: image-url("logo.png") left center no-repeat;
 }
 
 #wrap {
-	margin: 0 auto;
-	width: 800px;
+  margin: 0 auto;
+  width: 800px;
 }
 
 #main {
-	background: #fff $noise;
-	@include single-box-shadow;
-	
-	h1 {
-		margin: 0;
-		padding: 25px;
-		color: #fff;
-		background: $main-color $noise;
-		@include single-text-shadow;
-	}
-	
-	a {
-		color: $main-color;
-		cursor: pointer;
-		@include hover-link;
-		
-		&:active {
-			color: $main-color-dark;
-		}
-	}
-	
-	.content {
-		padding: 25px;
-	}
+  background: #fff $noise;
+  @include single-box-shadow;
+  
+  h1 {
+    margin: 0;
+    padding: 25px;
+    color: #fff;
+    background: $main-color $noise;
+    @include single-text-shadow;
+  }
+  
+  a {
+    color: $main-color;
+    cursor: pointer;
+    @include hover-link;
+    
+    &:active {
+      color: $main-color-dark;
+    }
+  }
+  
+  .content {
+    padding: 25px;
+  }
 }
