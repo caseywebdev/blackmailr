@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require underscore
+//= require underscore.string
+//= require extrascore
 //= require backbone
-//= require caseyWebDev
 //= require_tree .

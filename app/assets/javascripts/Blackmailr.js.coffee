@@ -1,5 +1,8 @@
-if not Blackmailr? and jQuery?
+if not Blackmailr? and Extrascore?
   $ = jQuery
-  window.Blackmailr = class extends caseyWebDev
-  Blackmailr.init()
+  window.Blackmailr =
+    Ui:
+      init: ->
+        #ui stuff
+  _.init Blackmailr
   

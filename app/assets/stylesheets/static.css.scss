@@ -1,6 +1,7 @@
 @import "_base";
 
 body {
+  color: #333;
   background: #333 $noise;
 }
 
@@ -36,9 +37,11 @@ body {
     &:active {
       color: $main-color-dark;
     }
+    
   }
   
   .content {
     padding: 25px;
   }
+  
 }
