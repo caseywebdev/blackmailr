@@ -51,15 +51,18 @@ body {
       background: $main-color $noise;
       
       .title {
-        font-size: 30px;
+        font-size: 26px;
+        line-height: 30px;
         font-weight: bold;
         color: #fff;
         @include single-text-shadow;
+        @include force-wrap;
       }
       
       .name {
         float: right;
-        font-size: 18px;
+        margin-left: 10px;
+        font-size: 16px;
         line-height: 18px;
         color: $main-color-light;
         @include single-text-shadow;
@@ -68,7 +71,8 @@ body {
       .time {
         clear: right;
         float: right;
-        font-size: 12px;
+        margin-left: 10px;
+        font-size: 10px;
         line-height: 12px;
         color: $main-color-light;
       }
@@ -77,12 +81,17 @@ body {
     
     .main {
       position: relative;
-      padding: 25px 35px;
+      padding: 35px;
       background: #fff;
       @include single-box-shadow;
       
+      img {
+        max-width: 100%;
+      }
+      
       .description {
-        padding-top: 25px;
+        padding-top: 10px;
+        @include force-wrap;
       }
     }
     
