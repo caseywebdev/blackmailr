@@ -6,7 +6,7 @@ class CreateBlackmails < ActiveRecord::Migration
                     :description,
                     :victim_name,
                     :victim_email, null: false
-      t.datetime    :end_at
+      t.datetime    :expired_at
       t.timestamps
     end
   end

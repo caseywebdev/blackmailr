@@ -3,6 +3,7 @@
 body {
   color: #333;
   background: #333 $noise;
+  font-size: 14px;
 }
 
 #header {
@@ -40,8 +41,63 @@ body {
     
   }
   
-  .content {
+  .blackmail {
     padding: 25px;
+    
+    .header {
+      margin: 0 10px;
+      padding: 10px;
+      background: $main-color $noise;
+      
+      .title {
+        font-size: 30px;
+        font-weight: bold;
+        color: #fff;
+        @include single-text-shadow;
+      }
+      
+      .name {
+        float: right;
+        font-size: 18px;
+        line-height: 18px;
+        color: $main-color-light;
+        @include single-text-shadow;
+      }
+      
+      .time {
+        clear: right;
+        float: right;
+        font-size: 12px;
+        line-height: 12px;
+        color: $main-color-light;
+      }
+      
+    }
+    
+    .main {
+      position: relative;
+      padding: 25px;
+      background: #fff;
+      @include single-box-shadow;
+      
+      .description {
+        padding-top: 25px;
+      }
+    }
+    
+    .footer {
+      margin: 0 10px;
+      height: 10px;
+      background: $main-color $noise;
+    }
   }
   
+}
+
+#footer {
+  padding: 25px;
+  font-size: 12px;
+  color: #EEE;
+  text-align: center;
+  @include single-text-shadow;
 }

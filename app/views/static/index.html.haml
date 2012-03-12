@@ -1,3 +1,11 @@
-%h1 Home
-.content
-  Test text and <a>test link</a>.
+%h1 Latest Victims
+- 10.times do
+  .blackmail
+    .header
+      .name @blackmail.victim_name
+      .time @(@blackmail.expired_at)
+      .title @blackmail.title
+    .main
+      @blackmail.images
+      .description @blackmail.description
+    .footer
