@@ -4,5 +4,6 @@ if not Blackmailr? and Extrascore?
     Ui:
       init: ->
         #ui stuff
+        delete Blackmailr.Ui.init;
   _.init Blackmailr
   

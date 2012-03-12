@@ -63,7 +63,7 @@ if not Extrascore? and jQuery? and _? and _.str?
           val = val.offset().top
         $(if $.browser.webkit then document.body else document.documentElement).animate scrollTop: val, duration, callback
 
-    # Extensions for Underscore (mostly individual classes using Underscore for the namespace)
+    # Extensions for Underscore (more of individual classes using Underscore for the namespace then actual extentions)
     Extensions:
       
       # Placeholder for lame browsers
@@ -71,7 +71,7 @@ if not Extrascore? and jQuery? and _? and _.str?
         
         # After the DOM is loaded
         load: ->
-        
+          
           # Hijack jQuery's .val() so it will return an empty string if Placeholder says it should
           $.fn._val = $.fn.val
           $.fn.val = (str) ->
@@ -79,6 +79,7 @@ if not Extrascore? and jQuery? and _? and _.str?
               $(@).each -> $(@)._val str
             else
               if $(@).data 'empty' then '' else $(@)._val()
+          delete _.Placeholder.load
         
         # Check for new inputs or textareas than need to be initialized with Placeholder
         dom: ->
@@ -134,6 +135,7 @@ if not Extrascore? and jQuery? and _? and _.str?
                   else return true
                 false
             o.correctUi()
+            delete o.load;
         
         # Match the PopUp size to the window
         correctUi: ->
@@ -369,6 +371,7 @@ if not Extrascore? and jQuery? and _? and _.str?
                   , duration
                   , -> $(@).css display: 'none').off e
             $t.data 'hover', true if e.type is 'mouseenter'
+          delete _.Tooltip.load;
       
       #
       # Looking into Backbone as a replacement for my lovely State class
@@ -383,15 +386,16 @@ if not Extrascore? and jQuery? and _? and _.str?
           o = _.State
           if history.state?
             history.replaceState true, null
-          $(window).on('popstate', (e) ->
+          $(window).on 'popstate', (e) ->
             if e.originalEvent.state?
               o.push location.href
             else
               history.replaceState true, null
-          ).on 'click', '.push-state', ->
+          $("body").on 'click', '.push-state', ->
             $t = $ @
             o.push if $t.data 'url' then $t.data 'url' else $t.attr 'href'
             false
+          delete o.init;
         updateCache: (url, o) ->
           o = _.State
           if o.cache[url]?
@@ -439,7 +443,9 @@ if not Extrascore? and jQuery? and _? and _.str?
         
         # After the DOM is ready
         load: ->
-          $(window).on 'scroll resize', _.Lazy.dom
+          o = _.Lazy
+          $(window).on 'scroll resize', o.dom
+          delete o.load;
           
         # Check for new lazy images
         dom: ->

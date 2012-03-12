@@ -1,4 +1,5 @@
 Blackmailr::Application.routes.draw do
+
   root to: 'static#index'
   
   get '*bad_path' => redirect('/')
