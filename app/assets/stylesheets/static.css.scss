@@ -7,11 +7,35 @@ body {
   font-size: 14px;
 }
 
+a {
+  cursor: pointer;
+  @include hover-link;
+}
+
 #header {
   position: relative;
-  margin-bottom: -25px;
-  height: 110px;
+  margin: 0 -25px -25px;
+  padding-top: 60px;
+  height: 50px;
+  text-align: right;
   background: image-url("logo.png") left center no-repeat;
+  
+  a {
+    @include inline-block;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    background: $main-color $noise;
+    @include single-text-shadow;
+    @include single-box-shadow;
+    
+    &:active {
+      background-color: $main-color-dark;
+    }
+    
+  }
+  
 }
 
 #wrap {
@@ -32,14 +56,7 @@ body {
   }
   
   a {
-    color: $main-color;
-    cursor: pointer;
-    @include hover-link;
-    
-    &:active {
-      color: $main-color-dark;
-    }
-    
+    @include link-colors($main-color, $main-color-dark);
   }
   
   .blackmail {

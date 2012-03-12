@@ -3,7 +3,7 @@
   %head
     %meta(http-equiv='x-ua-compatible' content='ie=edge; chrome=1')
     %meta(charset='utf-8')
-    %meta(name='viewport' content='width=700')
+    %meta(name='viewport' content='width=800')
     %meta(name='format-detection' content='telephone=no')
     %title Blackmailr | Get what you want, when you want it, or else...
     = stylesheet_link_tag 'application', :media => 'all'
@@ -12,5 +12,12 @@
   %body
     #wrap
       #header
+        - if true#logged_in
+          %a#new-blackmail New
+          %a#edit-blackmail Edit
+          %a#edit-profile Profile
+          %a#sign-out Sign out
+        - else
+          %a#sign-in-or-sign-up Sign in or sign up!
       #main= yield
       #footer Blackmailr isn't responsible for anything, so don't sue us or we'll blackmail you =]
