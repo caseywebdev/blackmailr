@@ -56,6 +56,9 @@ group :assets do
   # JS minifier
   gem 'uglifier'
   
+  # Backbone.js and Underscore.js
+  gem 'rails-backbone'
+  
   # Compass CSS
   gem 'compass-rails'
   
