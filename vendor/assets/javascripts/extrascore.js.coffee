@@ -20,21 +20,25 @@ if not Extrascore? and jQuery? and _? and _.str?
         _.each obj, (val) -> val?[str]?(args...)
           
       # Initialize an object by calling init on children and then assigning the load method to jQuery's DOM ready call
+      # This is a special _.mass() function
       init: (obj) ->
+        
+        # Call on jQuery's DOM ready call
+        load = (obj) ->
+          _.mass obj, 'load'
+          dom obj
+          $('body').on 'DOMSubtreeModified', (e) -> dom obj, e unless obj._extrascoreDomLocked
+          
+        # Call on every DOMSubtreeModified event (use carefully, doesn't work in Opera *shocking*)
+        dom = (obj, e) ->
+          obj._extrascoreDomLocked = true
+          _.mass obj, 'dom', e
+          obj._extrascoreDomLocked = false
+        
+        # Call 'init()' on all children of obj if the method exists
         _.mass obj, 'init'
-        $ -> _.load obj
         
-      # Call on jQuery's DOM ready call
-      load: (obj) ->
-        _.mass obj, 'load'
-        _.dom obj
-        $('body').on 'DOMSubtreeModified', (e) -> _.dom obj, e unless obj.domLocked
-        
-      # Call on every DOMSubtreeModified event (use carefully, doesn't work in Opera *shocking*)
-      dom: (obj, e) ->
-        obj.domLocked = true
-        _.mass obj, 'dom', e
-        obj.domLocked = false
+        $ -> load obj
       
       # Clean a string for use in a URL or query
       clean: (str, opt={}) ->
@@ -428,6 +432,8 @@ if not Extrascore? and jQuery? and _? and _.str?
                 .on 'mouseleave blur', (e) ->
                   $t.data 'hover', false if e.type is 'mouseleave'
                   _.Tooltip.hide $t
+              
+              # If the tooltip is 'hoverable' (aka it should stay while the mouse is over the tooltip itself)
               if $t.data('hoverable')? and not $t.data('mouse')?
                 $div.hover ->
                   _.Tooltip.show $t
@@ -436,7 +442,13 @@ if not Extrascore? and jQuery? and _? and _.str?
                   $(@).data hover: false
                   _.Tooltip.hide $t
               else
-                $div.css pointerEvents: 'none'
+              
+                # Otherwise turn off interaction with the mouse
+                $div.css
+                  pointerEvents: 'none'
+                  '-webkit-user-select': 'none'
+                  '-moz-user-select': 'none'
+                  userSelect: 'none'
                       
         # Show the tooltip if it's not already visible
         show: ($t) ->
@@ -570,8 +582,8 @@ if not Extrascore? and jQuery? and _? and _.str?
       # Load images only when they're on the page or about to be on it
       Lazy:
       
-        # Default tolerance, can be overidden
-        tolerance: 100
+        # Default tolerance, can be overidden here or with data-tolerance='xxx'
+        TOLERANCE: 100
         
         # After the DOM is ready
         load: ->
@@ -584,7 +596,7 @@ if not Extrascore? and jQuery? and _? and _.str?
             visible = _.reduce $t.parents, (memo, parent) ->
               memo and $(parent).css('display') isnt 'none' and $(parent).css('visibility') isnt 'hidden'
             , true
-            if visible && $(window).scrollTop()+$(window).outerHeight() >= $t.offset().top-_.Lazy.tolerance
+            if visible && $(window).scrollTop()+$(window).outerHeight() >= $t.offset().top-($t.data('tolerance') ? _.Lazy.TOLERANCE)
               url = $t.data 'lazy'
               $t.removeAttr('data-lazy').attr 'src', url
       
