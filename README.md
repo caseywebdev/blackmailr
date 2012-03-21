@@ -10,3 +10,5 @@ Mockups:
 * [Edit](http://blackmailr.herokuapp.com/assets/mockups/edit.png)
 * [Index](http://blackmailr.herokuapp.com/assets/mockups/index.png)
 * [View](http://blackmailr.herokuapp.com/assets/mockups/view.png)
+* [Login / Register](http://blackmailr.herokuapp.com/assets/mockups/login_register.png)
+* [Reset](http://blackmailr.herokuapp.com/assets/mockups/reset.png)
