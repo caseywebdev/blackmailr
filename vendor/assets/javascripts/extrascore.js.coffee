@@ -1,13 +1,10 @@
-###! Extrascore (requires jQuery, Underscore and Underscore.string) by Casey Foster (caseywebdev.com) ###
+###! Extrascore (requires jQuery and Underscore) by Casey Foster (caseywebdev.com) ###
 
 # Check dependencies
-if not Extrascore? and jQuery? and _? and _.str?
+if not Extrascore? and jQuery? and _?
   
   # Use the jQuery shortcut
   $ = jQuery
-  
-  # Mixin Underscore.string
-  _.mixin _.str.exports()
   
   # Define the Extrascore object
   window.Extrascore =
@@ -50,14 +47,26 @@ if not Extrascore? and jQuery? and _? and _.str?
         str = str+''
         str = str.toLowerCase() if opt.downcase
         str = str.replace(/'/g, '').replace(/[^\w\s]|_/g, ' ') if opt.alphanumeric
-        _.strip(str.replace /\s+/, ' ').replace /\ /g, opt.delimiter
+        $.trim(str.replace /\s+/g, ' ').replace /\ /g, opt.delimiter
+      
+      # This sucker comes in handy
+      startsWith: (str, start) ->
+        str = str+''
+        start = start+''
+        return start.length <= str.length and str.substr(0, start.length) is start
+      
+      # This guys too
+      endsWith: (str, end) ->
+        str = str+''
+        end = end+''
+        return end.length <= str.length and str.substr(-end.length) is end      
       
       # Sort an object by key for iteration
       sortByKey: (obj) ->
         newObj = {}
         _.chain(obj)
-          .map (val, key) -> [key, val]
-          .sortBy (val) -> val[0]
+          .map((val, key) -> [key, val])
+          .sortBy((val) -> val[0])
           .each (val) -> newObj[val[0]] = val[1]
         newObj
       
@@ -68,23 +77,28 @@ if not Extrascore? and jQuery? and _? and _.str?
         $(if $.browser.webkit then document.body else document.documentElement).animate scrollTop: val, duration, callback
       
       # Get a full URL from a relative url
-      url: (path = '') ->
-          
-          # See if it's already a URL
-          if path.match /^\w+:/
-            path
-          
+      url: (path = '', protocol = location.protocol) ->
+        
+        # Append a colon to the protocol if necessary
+        protocol += ':' unless _.endsWith protocol, ':'
+        
+        # See if it's already a URL
+        unless path.match /^\w+:/
+        
           # See if it's a URL looking for a protocol
-          else if _.startsWith path, '//'
-            location.protocol+path
+          if _.startsWith path, '//'
+            path = location.protocol+path
           
           # See if it's relative to the domain root
           else if _.startsWith path, '/'
-            location.protocol+'//'+location.host+path
+            path = location.protocol+'//'+location.host+path
             
           # Otherwise it must be relative to the current location
           else
-            location.href+path
+            path = location.href+path
+        
+        # Swap the protocols if necessary
+        path.replace location.protocol, protocol
     
     # Extensions for Underscore (more of individual classes using Underscore for the namespace then actual extentions)
     Extensions:
@@ -101,123 +115,140 @@ if not Extrascore? and jQuery? and _? and _.str?
             if str?
               $(@).each -> $(@)._val str
             else
-              if $(@).data 'empty' then '' else $(@)._val()
+              if $(@).data 'placeholderEmpty' then '' else $(@)._val()
                   
         # Check for new inputs or textareas than need to be initialized with Placeholder
         dom: ->
           $('input[data-placeholder], textarea[data-placeholder]').each ->
             $t = $ @
-            if $t.data('placeholder')? and not $t.data('empty')?
-              password = $t.data('password')?
-              placeholder = $t.data 'placeholder'
-              $t[0].type = 'password' if password
+            # Strings to CONSTANTS for minification
+            PLACEHOLDER = 'placeholder'
+            PASSWORD = 'password'
+            PLACEHOLDER_EMPTY = 'placeholderEmpty'
+            if $t.data(PLACEHOLDER)? and not $t.data(PLACEHOLDER_EMPTY)?
+              password = $t.data('placeholderPassword')?
+              placeholder = $t.data PLACEHOLDER
+              $t[0].type = PASSWORD if password
               unless password and $.browser.msie and $.browser.version.split('.') < 9
                 if not $t.val() or $t.val() is placeholder
-                  $t.data 'empty', true
+                  $t.data PLACEHOLDER_EMPTY, true
                   $t.val placeholder
-                  $t[0].type = "" if password
+                  $t[0].type = '' if password
                 else
-                  $t.data 'empty', false
-                $t.attr placeholder: placeholder, title: placeholder
+                  $t.data PLACEHOLDER_EMPTY, false
+                $t.attr
+                  placeholder: placeholder
+                  title: placeholder
                 $t.focus(->
-                  $t.val '' if $t.data 'empty'
+                  $t.val '' if $t.data PLACEHOLDER_EMPTY
                   if password
-                    $t[0].type = 'password'
-                    $t.attr 'placeholder', placeholder
-                  $t.data 'empty', false
+                    $t[0].type = PASSWORD
+                    $t.attr PLACEHOLDER, placeholder
+                  $t.data PLACEHOLDER_EMPTY, false
                 ).blur ->
                   if $t.val()
-                    $t.data 'empty', false
+                    $t.data PLACEHOLDER_EMPTY, false
                   else
                     $t.val placeholder
-                    $t.data 'empty', true
-                    $t[0].type = "" if password
+                    $t.data PLACEHOLDER_EMPTY, true
+                    $t[0].type = '' if password
       
       # Multipurpose PopUp
       PopUp:
         
-        # Fade duration default, feel free to change
+        # Duration and Fade duration default, feel free to change
+        DURATION: 0
         FADE_DURATION: 250
         
-        # After the DOM is load
-        load: ->
-          unless $('#_pop-up').length
-          
-            # Shortcut
-            o = _.PopUp;
-
-            # Until 'display: box' becomes more widely available, we're stuck with tables for cross-browser centering
-            $('body').append o.$table =
-              $('<table><tbody><tr><td><div/></td></tr></tbody></table>')
+        # Build the PopUp element
+        build: ->
+          # Shortcut
+          o = _.PopUp;
+          unless $('#pop-up-container').length
+            
+            # Until 'display: box' becomes more widely available, we're stuck with line-height and vertical-align
+            $('body').append o.$container =
+              $('<div><div><div/></div></div>')
                 .attr(
-                  id: '#_pop-up-table')
-                .css
+                  id: 'pop-up-container'
+                ).css
                   display: 'none'
                   position: 'fixed'
                   zIndex: 999999
                   left: 0
                   top: 0
-                  borderCollapse: 'collapse'
                   opacity: 0
-            o.hide()
-            o.$td =
-              o.$table.find('td')
-                .css
                   textAlign: 'center'
-                  verticalAlign: 'middle'
+            o.hide()
             o.$div =
-              o.$td.find('div')
-                .attr
-                  id: '#_pop-up'
+              o.$container.find('> div')
+                .attr(
+                  id: 'pop-up'
+                ).css
+                  display: 'inline-block'
+                  lineHeight: 'normal'
+                  verticalAlign: 'middle'
+            #o.$div.attr
+                  # IE inline-block hack...
+                  #style: o.$div.attr('style')+' *zoom: 1; *display: inline'
             $(window).on 'scroll resize orientationchange', o.correct
-            o.$td.on 'click', -> o.$div.find('._pop-up-outside').click()
+            o.$container.on 'click', -> o.$div.find('*[data-pop-up-outside]').click()
             o.$div
               .on('click', false)
-              .on 'click', '._pop-up-hide', o.hide
+              .on 'click', '*[data-pop-up-hide]', o.hide
             $(document).keydown (e) ->
-              if o.$table.css('display') is 'block' and not $('body :focus').length
+              if o.$container.css('display') is 'block' and not $('body :focus').length
                 switch e.keyCode
-                  when 13 then o.$div.find('._pop-up-enter').click()
-                  when 27 then o.$div.find('._pop-up-esc').click()
+                  when 13 then o.$div.find('*[data-pop-up-enter]').click()
+                  when 27 then o.$div.find('*[data-pop-up-esc]').click()
                   else return true
                 false
             o.correct()
                     
         # Match the PopUp size to the window
         correct: ->
-          _.PopUp.$td.width($(window).width()).height $(window).height()
+          o = _.PopUp
+          if o.$container?
+            o.$container
+              .css
+                width: $(window).width()
+                lineHeight: "#{$(window).height()}px"
           
         # Fade the PopUp out
         hide: (fadeDuration) ->
           o = _.PopUp
-          o.$table
-            .stop()
-            .animate
-              opacity: 0
-            , fadeDuration ? o.$table.data('fadeDuration')
-            , -> o.$table.css 'display', 'none'
+          if o.$container?
+            o.$container
+              .stop()
+              .animate
+                opacity: 0
+              , (if isNaN(fadeDuration) then o.fadeDuration else fadeDuration)
+              , -> o.$container.css display: 'none'
           
         # Show the PopUp with the given `html`, optionally for a duration
-        show: (html, opt) ->
+        show: (html, opt = {}) ->
           o = _.PopUp
+          
+          # Build the PopUp element
+          o.build()
+          
           opt = _.extend
-            duration: null
+            duration: o.DURATION
             callback: null
             fadeDuration: o.FADE_DURATION
           , opt
           $('body :focus').blur()
+          o.fadeDuration = opt.fadeDuration
           o.$div.html html
-          o.$table
-            .data(
-              fadeDuration: opt.fadeDuration)
+          o.$container
             .stop()
             .css(
               display: 'block')
             .animate
               opacity: 1
             , opt.fadeDuration
-          clearTimeout o.timer if o.timer?
-          o.timer = setTimeout ->
+          clearTimeout o.timeout if o.timeout?
+          o.timeout = setTimeout ->
             o.hide()
             opt.callback?()
           , opt.duration if opt.duration
@@ -229,33 +260,33 @@ if not Extrascore? and jQuery? and _? and _.str?
         dom: ->
           $('*[data-search]').each ->
             $search = $ @
-            if not $search.data('cache')?
+            if not $search.data('searchCache')?
               o = _.Search
               $search.data
-                cache: []
-                id: 0
-                ajax: {}
-                lastQ: null
-                page: 0
-                holdHover: false
-                $q: $search.find('.q').attr(autocomplete: 'off')
-                $results: $search.find '.results'
-              $q = $search.data('$q')
-              $results = $search.data '$results'
+                searchCache: []
+                searchId: 0
+                searchAjax: {}
+                searchLastQ: null
+                searchPage: 0
+                searchHoldHover: false
+                search$Q: $search.find('.q').attr(autocomplete: 'off')
+                search$Results: $search.find '.results'
+              $q = $search.data('search$Q')
+              $results = $search.data 'search$Results'
               o.query $search if $q.is ':focus'
               $search.hover(->
-                $search.data hover: true
+                $search.data searchHover: true
               , ->
-                $search.data hover: false
-                $results.css display: 'none' unless $q.is(':focus') or $search.data 'holdHover'
+                $search.data searchHover: false
+                $results.css display: 'none' unless $q.is(':focus') or $search.data 'searchHoldHover'
               ).mouseover ->
-                $search.data holdHover: false
+                $search.data searchHoldHover: false
               $q.blur(->
                 setTimeout ->
-                  $results.css display: 'none' unless $search.data 'hover'
+                  $results.css display: 'none' unless $search.data 'searchHover'
                 , 0
               ).focus(->
-                $search.data holdHover: false
+                $search.data searchHoldHover: false
               ).keydown((e) ->
                 switch e.keyCode
                   when 13 then $search.find('.selected').click()
@@ -274,92 +305,89 @@ if not Extrascore? and jQuery? and _? and _.str?
                 false
               ).on 'focus keyup change', ->
                 o.query $search
-              $results.on('mouseenter', '.result', ->
-                $results.find('.result.selected').removeClass 'selected'
-                $(@).addClass 'selected'
-              ).on 'click', '.result', ->
+              $results.on 'mouseenter click', '.result', (e) ->
                 $t = $ @
                 $results.find('.result.selected').removeClass 'selected'
                 $t.addClass 'selected'
-                if $t.hasClass 'prev'
-                  o.page $search, $search.data('page')-1, true
-                  $search.data holdHover: true
-                else if  $t.hasClass 'next'
-                  o.page $search, $search.data('page')+1
-                  $search.data holdHover: true
-                else if $t.hasClass 'submit'
-                  $t.parents('form').submit()
-                if $t.hasClass 'hide-search'
-                  $q.blur()
-                  $results.css display: 'none'
+                if e.type is 'click'
+                  if $t.is('.prev')
+                    o.page $search, $search.data('searchPage')-1, true
+                    $search.data searchHoldHover: true
+                  else if $t.is('.next')
+                    o.page $search, $search.data('searchPage')+1
+                    $search.data searchHoldHover: true
+                  else if $t.is('.submit')
+                    $t.parents('form').submit()
+                  if $t.data('searchHide')?
+                    $q.blur()
+                    $results.css display: 'none'
         
         # Change the current search results page
         page: ($searches, n, prev) ->
           $searches.each ->
             $search = $ @
-            $results = $search.data '$results'
+            $results = $search.data 'search$Results'
             n = Math.min $results.find('.page').length-1, Math.max n, 0
             $results.find('.result.selected').removeClass 'selected'
-            $results.find('.page').css('display', 'none').eq(n).removeAttr('style').find('.result:not(.prev):not(.next)')[if prev then 'last' else 'first']().addClass 'selected'
-            $search.data 'page', n
+            $results.find('.page').css(display: 'none').eq(n).removeAttr('style').find('.result:not(.prev):not(.next)')[if prev then 'last' else 'first']().addClass 'selected'
+            $search.data 'searchPage', n
         
         # Send the value of q to the correct search function and return the result to the correct callback
         query: ($searches, urlN = 1) ->
           $searches.each ->
             o = _.Search
             $search = $ @
-            $results = $search.data '$results'
-            $q = $search.data '$q'
+            $results = $search.data 'search$Results'
+            $q = $search.data 'search$Q'
             callback = eval $search.data('search')
-            q = o.parseQuery $q.val()
+            q = o.parseQuery $q.val(), $search.data('searchColonSplitQuery')?
             t = new Date().getTime()
             $results.css display: 'block'
-            empty = 'empty' of $search.data
-            unless q or empty
+            unless q or $search.data('searchEmpty')?
               $results.css(display: 'none').html ''
               $search.removeClass 'loading'
-            else if q isnt $search.data('lastQ') or urlN > 1
+            else if q isnt $search.data('searchLastQ') or urlN > 1
               callback $search
-              clearTimeout $search.data 'timeout'
-              $search.data('ajax').abort?()
-              if $search.data('cache')["#{urlN}_"+q]?
-                callback $search, $search.data('cache')["#{urlN}_"+q], urlN
+              clearTimeout $search.data 'searchTimeout'
+              $search.data('searchAjax').abort?()
+              if $search.data('searchCache')["#{urlN}_"+q]?
+                callback $search, $search.data('searchCache')["#{urlN}_"+q], urlN
                 $search.removeClass 'loading'
-                o.query $search, urlN+1 if $search.data("url#{urlN+1}")?
+                o.query $search, urlN+1 if $search.data("searchUrl#{urlN+1}")?
               else
-                $search.addClass('loading').data 'timeout',
+                $search.addClass('loading').data 'searchTimeout',
                   setTimeout ->
                     handleData = (data) ->
-                      $search.data('cache')["#{urlN}_"+q] = data
-                      if check is $search.data('id') and o.parseQuery($q.val()) or empty
+                      $search.data('searchCache')["#{urlN}_"+q] = data
+                      if check is $search.data('searchId') and o.parseQuery($q.val()) or $search.data('searchEmpty')?
                         $search.removeClass 'loading'
                         callback $search, data, urlN
-                      o.query $search, urlN+1 if $search.data 'url'+(urlN+1)
-                    check = $search.data(id: $search.data('id')+1).data 'id'
-                    if $search.data('js')?
-                      handleData eval($search.data 'js')(q)
-                    else if $search.data('url')?
-                      $search.data ajax: $.getJSON($search.data("url#{if urlN is 1 then '' else urlN}"), q: q, handleData)
-                  , $search.data('delay') ? 0
-            $search.data 'lastQ', q
+                      o.query $search, urlN+1 if $search.data 'searchUrl'+(urlN+1)
+                    check = $search.data(searchId: $search.data('searchId')+1).data 'searchId'
+                    if $search.data('searchJs')?
+                      handleData eval($search.data 'searchJs')(q)
+                    else if $search.data('searchUrl')?
+                      $search.data searchAjax: $.getJSON($search.data("searchUrl#{if urlN is 1 then '' else urlN}"), q: q, handleData)
+                  , $search.data('searchDelay') ? 0
+            $search.data 'searchLastQ', q
         
         # Select the next or previous in a list of results
         select: ($searches, dir) ->
           $searches.each ->
             o = _.Search
             $search = $ @
-            $page = $search.find('.page').eq $search.data 'page'
+            $page = $search.find('.page').eq $search.data 'searchPage'
             $page.find('.result')[if dir is 'prev' then 'first' else 'last']().addClass 'selected' unless $page.find('.result.selected').removeClass('selected')[dir]().addClass('selected').length
-            if $page.find('.result.selected').hasClass 'prev'
-              o.page $search, $search.data('page')-1, true
-            else if $page.find('.result.selected').hasClass 'next'
-              o.page $search, $search.data('page')+1
+            if $page.find('.result.selected.prev').length
+              o.page $search, $search.data('searchPage')-1, true
+            else if $page.find('.result.selected.next').length
+              o.page $search, $search.data('searchPage')+1
       
         # Break a query up into components if colons are used
-        parseQuery: (str) ->
+        parseQuery: (str, colonSplit = false) ->
           str = _.clean str, downcase: true
           colon = _.compact str.split ':'
-          if colon.length > 1
+          if colonSplit and colon.length > 1
             colon = _.map colon, (str) -> _.strip(str).match /(?:^|^(.*) )(\w+)$/
             terms = {}
             _.each colon, (match, i) ->
@@ -374,7 +402,7 @@ if not Extrascore? and jQuery? and _? and _.str?
            
       # Yay tooltips!
       Tooltip:
-      
+        
         # Store mouse coordinates
         mouse:
           x: 0
@@ -383,78 +411,90 @@ if not Extrascore? and jQuery? and _? and _.str?
         # Set mousemove on document to track coordinates
         load: ->
           o = _.Tooltip
-          $('body').mousemove (e) ->
+          $('body').mousemove((e) ->
             o.mouse =
               x: e.pageX
               y: e.pageY
             $('*[data-tooltip]').each ->
               $t = $ @
-              $t.data('$div').css o.position($t).home if $t.data('$div')? and $t.data('mouse')?
-                  
-        dom: ->
-          $('*[data-tooltip]').each ->
-            o = _.Tooltip
+              $t.data('tooltip$Div').css o.position($t).home if $t.data('tooltip$Div')? and $t.data('tooltipMouse')?
+          ).on('mouseenter', '*[data-tooltip]:not([data-tooltip-no-hover])', ->
             $t = $ @
-            unless $t.data('$div')?
-              $t.parent().css position: 'relative' if $t.parent().css position: 'static'
-              $t.data hoverable: null if $t.data('mouse')?
-              $t.data _.extend
-                position: 'top',
-                offset: 0,
-                duration: 0,
-                mouse: null,
-                hoverable: null
-              , $t.data()
-              $div = $('<div><div/></div>')
-                .addClass("_tooltip #{$t.data('position')}")
-                .css
-                  display: 'none'
-                  position: 'absolute'
-                  zIndex: 999999;
-              $div
-                .find('> div')
-                .html($t.data('tooltip'))
-                .css
-                  position: 'relative'
-              $t
-                .data($div: $div)
-                .parent()
-                .append $div
-              position = o.position($t)
-              $div
-                .css(position.home)
-                .find('> div')
-                .css _.extend {opacity: 0}, position.away
-              $t
-                .on('mouseenter focus', (e) ->
-                  _.Tooltip.show $t
-                  $t.data 'hover', true if e.type is 'mouseenter')
-                .on 'mouseleave blur', (e) ->
-                  $t.data 'hover', false if e.type is 'mouseleave'
-                  _.Tooltip.hide $t
-              
-              # If the tooltip is 'hoverable' (aka it should stay while the mouse is over the tooltip itself)
-              if $t.data('hoverable')? and not $t.data('mouse')?
-                $div.hover ->
-                  _.Tooltip.show $t
-                  $(@).data hover: true
-                , ->
-                  $(@).data hover: false
-                  _.Tooltip.hide $t
-              else
-              
-                # Otherwise turn off interaction with the mouse
-                $div.css
-                  pointerEvents: 'none'
-                  '-webkit-user-select': 'none'
-                  '-moz-user-select': 'none'
-                  userSelect: 'none'
-                      
+            o.show $t
+            $t.data tooltipHover: true
+          ).on('mouseleave', '*[data-tooltip]:not([data-tooltip-no-hover])', ->
+            $t = $ @
+            $t.data tooltipHover: false
+            o.hide $t
+          ).on('focus', '*[data-tooltip]:not([data-tooltip-no-focus])', ->
+            o.show $ @
+          ).on('blur', '*[data-tooltip]:not([data-tooltip-no-focus])', ->
+            o.hide $ @
+          )
+        
+        # Get the current tooltip$Div for an item or create a new one and return that
+        divFor: ($t) ->
+          o = _.Tooltip
+          unless $t.data 'tooltip$Div'
+            $t.parent().css position: 'relative' if $t.parent().css position: 'static'
+            $t.data tooltipHoverable: null if $t.data('tooltipMouse')?
+            $t.data _.extend
+              tooltipPosition: 'top'
+              tooltipOffset: 0
+              tooltipDuration: 0
+              tooltipNoHover: null
+              tooltipNoFocus: null
+              tooltipMouse: null
+              tooltipHoverable: null
+              tooltipHoverableHover: null
+            , $t.data()
+            $div = $('<div><div/></div>')
+              .addClass("tooltip #{$t.data('tooltipPosition')}")
+              .css
+                display: 'none'
+                position: 'absolute'
+                zIndex: 999999;
+            $div
+              .find('> div')
+              .html($t.data('tooltip'))
+              .css
+                position: 'relative'
+            $t
+              .data(tooltip$Div: $div)
+              .parent()
+              .append $div
+            position = o.position($t)
+            $div
+              .css(position.home)
+              .find('> div')
+              .css _.extend {opacity: 0}, position.away
+            
+            # If the tooltip is 'hoverable' (aka it should stay while the mouse is over the tooltip itself)
+            if $t.data('tooltipHoverable')?
+              $div.hover ->
+                _.Tooltip.show $t
+                $t.data tooltipHoverableHover: true
+              , ->
+                $t.data tooltipHoverableHover: false
+                _.Tooltip.hide $t
+            else
+            
+              # Otherwise turn off interaction with the mouse
+              $div.css
+                pointerEvents: 'none'
+                '-webkit-user-select': 'none'
+                '-moz-user-select': 'none'
+                userSelect: 'none'
+          $t.data 'tooltip$Div'
+                             
         # Show the tooltip if it's not already visible
         show: ($t) ->
-          $div = $t.data '$div'
-          unless $t.data('hover') or $t.is(':focus') or $div.data 'hover'
-            position = _.Tooltip.position($t)
+          o = _.Tooltip
+          $div = o.divFor $t
+          unless  (not $t.data('tooltipNoHover')? and $t.data 'tooltipHover') or
+                  (not $t.data('tooltipNoFocus')? and $t.is ':focus') or
+                  $t.data 'tooltipHoverableHover'
+            position = o.position($t)
             $div
               .appendTo($t.parent())
               .css(_.extend {display: 'block'}, position.home)
@@ -464,29 +504,34 @@ if not Extrascore? and jQuery? and _? and _.str?
                 opacity: 1
                 top: 0
                 left: 0
-              , $t.data 'duration'
+              , $t.data 'tooltipDuration'
         
         # Hide the tooltip if it's not already hidden
         hide: ($t) ->
-          $div = $t.data '$div'
-          unless $t.data('hover') or $t.is ':focus' or $div.data 'hover'
-            position = _.Tooltip.position($t)
-            $div
-              .css(position.home)
-              .find('> div')
-              .stop()
-              .animate _.extend({opacity: 0}, position.away),
-                duration: $t.data 'duration'
-                complete: -> $(@).parent().css display: 'none'
+          o = _.Tooltip
+          if $div = $t.data 'tooltip$Div'
+            unless  (not $t.data('tooltipNoHover')? and $t.data 'tooltipHover') or
+                    (not $t.data('tooltipNoFocus')? and $t.is ':focus') or
+                    $t.data 'tooltipHoverableHover'
+              position = o.position($t)
+              $div
+                .css(position.home)
+                .find('> div')
+                .stop()
+                .animate _.extend({opacity: 0}, position.away),
+                  duration: $t.data 'tooltipDuration'
+                  complete: ->
+                    $t.data tooltip$Div: null
+                    $(@).parent().remove()
         
         # Method for getting the correct CSS position data for a tooltip
         position: ($t) ->
           o = _.Tooltip
-          $div = $t.data '$div'
-          offset = $t.data 'offset'
+          $div = $t.data 'tooltip$Div'
+          offset = $t.data 'tooltipOffset'
           divWidth = $div.outerWidth()
           divHeight = $div.outerHeight()
-          if $t.data('mouse')?
+          if $t.data('tooltipMouse')?
             tLeft = o.mouse.x-$t.parent().offset().left
             tTop = o.mouse.y-$t.parent().offset().top
             tWidth = tHeight = 0
@@ -500,7 +545,7 @@ if not Extrascore? and jQuery? and _? and _.str?
             left: tLeft
             top: tTop
           away = {}
-          switch $t.data('position')
+          switch $t.data('tooltipPosition')
             when 'top'
               home.left += (tWidth-divWidth)/2
               home.top -= divHeight
@@ -518,6 +563,18 @@ if not Extrascore? and jQuery? and _? and _.str?
               home.top += (tHeight-divHeight)/2
               away.left = -offset
           {home: home, away: away}
+        
+        # Use this to correct the placeholder content and positioning between events if necessary
+        correct: ($t) ->
+          o = _.Tooltip
+          $div = $t.data 'tooltip$Div'
+          if $div
+            if $t.css('display') is 'none'
+              console.log 'yip'
+              $t.mouseleave().blur()
+            else
+              $div.find('> div').html($t.data('tooltip'))
+              $div.css _.Tooltip.position($t).home
       
       #
       # Looking into Backbone as a replacement for my lovely State class
@@ -543,9 +600,9 @@ if not Extrascore? and jQuery? and _? and _.str?
               o.push location.href
             else
               history.replaceState true, null
-          $("body").on 'click', '.push-state', ->
+          $("body").on 'click', '*[data-state]', ->
             $t = $ @
-            o.push if $t.data 'url' then $t.data 'url' else $t.attr 'href'
+            o.push (if $t.data 'stateUrl' then $t.data 'stateUrl' else $t.attr 'href'), $t.data 'stateProtocol'
             false
         updateCache: (url, obj) ->
           o = _.State
@@ -553,10 +610,10 @@ if not Extrascore? and jQuery? and _? and _.str?
             _.extend o.cache[url], obj
           else
             o.cache[url] = obj
-        push: (url) ->
+        push: (url, protocol = location.protocol) ->
           o = _.State
-          url = _.url url
-          if location.protocol is url.match(/^\w+:/)[0] and history.pushState? and not o.refresh
+          url = _.url url, protocol
+          if history.pushState? and not o.refresh and _.startsWith url, location.protocol
             o.xhr.abort?()
             o.clear o.cache[url], url
             if o.cache[url]? and o.cache[url].cache isnt false
@@ -592,13 +649,18 @@ if not Extrascore? and jQuery? and _? and _.str?
                     
         # Check for new lazy images
         dom: ->
-          $('img[data-lazy]').each ->
-            visible = _.reduce $t.parents, (memo, parent) ->
-              memo and $(parent).css('display') isnt 'none' and $(parent).css('visibility') isnt 'hidden'
-            , true
-            if visible && $(window).scrollTop()+$(window).outerHeight() >= $t.offset().top-($t.data('tolerance') ? _.Lazy.TOLERANCE)
-              url = $t.data 'lazy'
-              $t.removeAttr('data-lazy').attr 'src', url
+        
+          # Wait for the browser to position the element on the page before checking its coordinates via setTimeout fn, 0
+          setTimeout ->
+            $('img[data-lazy]').each ->
+              $t = $ @
+              visible = _.reduce $t.parents(), (memo, parent) ->
+                memo and $(parent).css('display') isnt 'none' and $(parent).css('visibility') isnt 'hidden'
+              , true
+              if visible && $(window).scrollTop()+$(window).outerHeight() >= $t.offset().top-($t.data('lazyTolerance') ? _.Lazy.TOLERANCE)
+                url = $t.data 'lazy'
+                $t.removeAttr('data-lazy').attr 'src', url
+          , 0
       
       # Everyone's favorite cheat code        
       Konami: (callback, onlyOnce = false, code = '38,38,40,40,37,39,37,39,66,65,13', touchCode = 'up,up,down,down,left,right,left,right,tap,tap,tap') ->
