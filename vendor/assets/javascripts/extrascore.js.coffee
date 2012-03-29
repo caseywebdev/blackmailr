@@ -162,13 +162,14 @@ if not Extrascore? and jQuery? and _?
         
         # Build the PopUp element
         build: ->
+        
           # Shortcut
           o = _.PopUp;
           unless $('#pop-up-container').length
             
             # Until 'display: box' becomes more widely available, we're stuck with line-height and vertical-align
             $('body').append o.$container =
-              $('<div><div><div/></div></div>')
+              $('<div><div/></div>')
                 .attr(
                   id: 'pop-up-container'
                 ).css
@@ -186,11 +187,9 @@ if not Extrascore? and jQuery? and _?
                   id: 'pop-up'
                 ).css
                   display: 'inline-block'
+                  position: 'relative'
                   lineHeight: 'normal'
                   verticalAlign: 'middle'
-            #o.$div.attr
-                  # IE inline-block hack...
-                  #style: o.$div.attr('style')+' *zoom: 1; *display: inline'
             $(window).on 'scroll resize orientationchange', o.correct
             o.$container.on 'click', -> o.$div.find('*[data-pop-up-outside]').click()
             o.$div
@@ -293,10 +292,13 @@ if not Extrascore? and jQuery? and _?
                   when 38 then o.select $search, 'prev'
                   when 40 then o.select $search, 'next'
                   when 27
-                    setTimeout ->
-                      $results.css display: 'none'
-                    , 0
-                    $q.blur()
+                    if $q.val() is ''
+                      setTimeout ->
+                        $results.css display: 'none'
+                      , 0
+                      $q.blur()
+                    else
+                      $q.val ''
                   else
                     setTimeout ->
                       o.query $search if $q.is ':focus'
@@ -446,8 +448,10 @@ if not Extrascore? and jQuery? and _?
               tooltipNoFocus: null
               tooltipMouse: null
               tooltipHoverable: null
-              tooltipHoverableHover: null
             , $t.data()
+            ,
+              tooltipHover: false
+              tooltipHoverableHover: false
             $div = $('<div><div/></div>')
               .addClass("tooltip #{$t.data('tooltipPosition')}")
               .css
@@ -528,17 +532,20 @@ if not Extrascore? and jQuery? and _?
         position: ($t) ->
           o = _.Tooltip
           $div = $t.data 'tooltip$Div'
+          $parent = $t.parent()
           offset = $t.data 'tooltipOffset'
           divWidth = $div.outerWidth()
           divHeight = $div.outerHeight()
+          parentScrollLeft = $parent.scrollLeft()
+          parentScrollTop = $parent.scrollTop()
           if $t.data('tooltipMouse')?
-            tLeft = o.mouse.x-$t.parent().offset().left
-            tTop = o.mouse.y-$t.parent().offset().top
+            tLeft = o.mouse.x-$t.parent().offset().left+parentScrollLeft
+            tTop = o.mouse.y-$t.parent().offset().top+parentScrollTop
             tWidth = tHeight = 0
           else
             tPosition = $t.position()
-            tLeft = tPosition.left+parseInt $t.css 'marginLeft'
-            tTop = tPosition.top+parseInt $t.css 'marginTop'
+            tLeft = tPosition.left+parentScrollLeft+parseInt $t.css 'marginLeft'
+            tTop = tPosition.top+parentScrollTop+parseInt $t.css 'marginTop'
             tWidth = $t.outerWidth()
             tHeight = $t.outerHeight()
           home =
@@ -564,21 +571,27 @@ if not Extrascore? and jQuery? and _?
               away.left = -offset
           {home: home, away: away}
         
-        # Use this to correct the placeholder content and positioning between events if necessary
+        # Use this to correct the tooltip content and positioning between events if necessary
         correct: ($t) ->
           o = _.Tooltip
           $div = $t.data 'tooltip$Div'
           if $div
             if $t.css('display') is 'none'
-              console.log 'yip'
               $t.mouseleave().blur()
             else
               $div.find('> div').html($t.data('tooltip'))
               $div.css _.Tooltip.position($t).home
+        
+        # Use this to destroy a tooltip
+        destroy: ($t) ->
+          $t
+            .data(
+              tooltipHover: false
+              tooltipHoverableHover: false
+            ).removeAttr('data-tooltip')
+            .data('tooltip$Div')?.destroy()
       
-      #
-      # Looking into Backbone as a replacement for my lovely State class
-      #
+      # State manager
       State:
         xhr: {}
         cache: {}
@@ -602,7 +615,7 @@ if not Extrascore? and jQuery? and _?
               history.replaceState true, null
           $("body").on 'click', '*[data-state]', ->
             $t = $ @
-            o.push (if $t.data 'stateUrl' then $t.data 'stateUrl' else $t.attr 'href'), $t.data 'stateProtocol'
+            o.push (if $t.data 'state' then $t.data 'state' else $t.attr 'href'), $t.data 'stateProtocol'
             false
         updateCache: (url, obj) ->
           o = _.State
@@ -629,7 +642,7 @@ if not Extrascore? and jQuery? and _?
             location.assign url
         change: (url) ->
           o = _.State
-          history.pushState true, null, url if location.href isnt url
+          history[if o.cache[url].replaceState then 'replaceState' else 'pushState'] true, null, url if location.href isnt url
           o.parse o.cache[url], url
         clear: ->
         before: ->

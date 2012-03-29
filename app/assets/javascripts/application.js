@@ -16,6 +16,5 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
-//= require underscore.string
 //= require extrascore
 //= require_tree .
