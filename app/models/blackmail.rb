@@ -16,8 +16,8 @@
 class Blackmail < ActiveRecord::Base
   # Relations  
   belongs_to :user
-  has_many :demands, dependent: :destroy
+  has_many :demands, dependent: :delete_all
   
   # Validations
-  validates :victim_email, :presence => true, email: true
+  validates :victim_email, email: true
 end
