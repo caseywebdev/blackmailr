@@ -43,6 +43,9 @@ group :test do
   
   # Fancy dancy selector support in tests
   gem 'capybara'
+
+  #adds model information
+  gem 'annotate'
 end
 
 # Asset handlers
