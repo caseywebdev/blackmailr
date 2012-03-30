@@ -2,8 +2,8 @@
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  email      :string(255)
+#  id         :integer      not null, primary key
+#  email      :string(255)	not null
 #  created_at :datetime
 #  updated_at :datetime
 #
