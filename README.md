@@ -16,18 +16,18 @@ Mockups:
 ----------
 A project assignment by group **RamRod**
 
-###Group Members:
+##Group Members:
 * John Canfield
 * Casey Foster
 * Aakash Juneja
 * Ryan Lewis
 * Katie Soto
 * Julian Togashi
-----------
 
+----------
 Help for group members:
 
-##Getting environment set up:
+###Getting environment set up:
 1. rvm gemset create 'rails3.2'
 2. rvm use 1.9.3@rails3.2
 3. gem install rails
