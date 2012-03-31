@@ -18,4 +18,11 @@ class User < ActiveRecord::Base
   validates :email, email: true
   has_secure_password
 
+  #has_secure_password (available Rails 3.1+), automatically adds the salt to
+  #the beginning of the degist, so an authenticate method is all we need:
+  def self.authenticate(email, password)
+    find_by_email(email).try(:authenticate, password)
+  end
+  
+  
 end
