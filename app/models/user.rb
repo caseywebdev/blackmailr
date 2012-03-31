@@ -15,6 +15,6 @@ class User < ActiveRecord::Base
   # Validations
   #email must not be blank, and must follow the email format
   validates :email, :presence   => true, email: true
-  has_secure_password
+  has_secure_password #only available in Rails 3.1+, see rails3tutorial section 13.3
 
 end
