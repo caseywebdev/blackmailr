@@ -1,2 +1,28 @@
 %h1 Blackmail#new
 %p Find me in app/views/blackmail/new.html.haml
+
+= form_for(@blackmail) do |f|
+  = render 'shared/error_messages_blackmail'
+  .field
+    = f.label :title
+    %br
+    = f.text_field :title
+  .field
+    = f.label :description
+    %br
+    = f.text_field :description
+  .field
+    = f.label :victim_name
+    %br
+    = f.text_field :victim_name  
+  .field
+    = f.label :victim_email
+    %br
+    = f.text_field :victim_email
+  .field
+    = f.label :expired_at
+    %br
+    -# http://stackoverflow.com/questions/6273625/setting-datetime-field-using-ruby-form-helpers
+    = select_datetime Date.today, :prefix => :expired_at
+  .actions
+    = f.submit "Create Blackmail"
