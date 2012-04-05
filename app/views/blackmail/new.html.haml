@@ -1,3 +1,6 @@
+-# http://stackoverflow.com/questions/2718059/nested-resources-in-namespace-form-for
+-# http://stackoverflow.com/questions/9338068/rails-forms-101
+
 %h1 Create Blackmail
 = form_for(@blackmail) do |f|
   = render 'shared/error_messages'
@@ -24,6 +27,8 @@
   .field
     = f.label :expired_at
     %br
-    = f.text_field :expired_at       
+    -#= f.text_field :expired_at 
+    -# http://stackoverflow.com/questions/6273625/setting-datetime-field-using-ruby-form-helpers
+    = select_datetime Date.today, :prefix => :expired_at      
   .actions
     = f.submit "That's Blackmail!"
