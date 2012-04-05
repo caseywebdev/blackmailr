@@ -11,13 +11,12 @@ class BlackmailController < ApplicationController
   end
   
   def create
-    #create a new user with all data received from form (in params)
+    #create a new blackmail with all data received from form (in params)
     @blackmail = Blackmail.new(params[:blackmail])
     #once @blackmail is defined properly, calling @blackmail.save is all that’s needed to complete
     if @blackmail.save
         #Handle a successful save.
-        #sign_in @user #after a new user signs up, log them in
-        flash[:success] = "Registration Successful!"
+        flash[:success] = "Blackmail created!"
         redirect_to root_path
     else
     #re-render the signup page if invalid signup data is received.
