@@ -36,5 +36,5 @@ Help for group members:
 6. sudo apt-get install libmagick9-dev
 7. gem install rmagic -v '2.13.1'
 8. cd blackmailr *#or where ever it is*
-9. bundle install
-10. bundle exec rake db:migrate
+9. bundle --binstubs
+10. bin/rake db:migrate
