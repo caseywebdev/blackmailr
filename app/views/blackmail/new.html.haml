@@ -1,8 +1,17 @@
+-# http://stackoverflow.com/questions/2718059/nested-resources-in-namespace-form-for
+-# http://stackoverflow.com/questions/9338068/rails-forms-101
+
 %h1 Create Blackmail
 %p Find me in app/views/blackmail/new.html.haml
 
 = form_for(@blackmail) do |f|
-  = render 'shared/error_messages_blackmail'
+  = render 'shared/error_messages'
+  -# user_id currently needs to be inputted directly
+  -# need to grab user_id from session/cookie and insert into database
+  .field
+    = f.label :user_id
+    %br
+    = f.text_field :user_id
   .field
     = f.label :title
     %br
