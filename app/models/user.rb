@@ -11,7 +11,7 @@
 
 class User < ActiveRecord::Base
   # Relations
-  has_many :blackmails, dependent: :delete_all
+  has_many :blackmail, dependent: :delete_all
   
   # Validations
   # email must not be blank, and must follow the email format

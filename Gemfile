@@ -15,9 +15,6 @@ gem 'haml-rails'
 # Email validation
 gem 'validate_email'
 
-# Ruby ImageMagick (for showing just a piece of the picture)
-gem 'rmagick'
-
 # SQLite
 gem 'sqlite3', group: [:development, :test]
 

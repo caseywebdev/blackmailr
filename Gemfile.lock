@@ -127,7 +127,6 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     recaptcha (0.3.4)
-    rmagick (2.13.1)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -194,7 +193,6 @@ DEPENDENCIES
   rails-backbone
   rb-fsevent
   recaptcha
-  rmagick
   rspec-rails
   sass-rails
   sqlite3

@@ -16,7 +16,6 @@
       #header
         - if true#logged_in
           = link_to 'New', new_blackmail_path, class: 'push-state'
-          = link_to 'Edit', blackmails_path, class: 'push-state'
           = link_to 'Profile', '/profile', class: 'push-state'
           = link_to 'Sign out', '/sign-out'
         - else

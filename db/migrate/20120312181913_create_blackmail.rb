@@ -1,6 +1,6 @@
-class CreateBlackmails < ActiveRecord::Migration
+class CreateBlackmail < ActiveRecord::Migration
   def change
-    create_table :blackmails do |t|
+    create_table :blackmail do |t|
       t.references  :user, null: false
       t.string      :title,
                     :description,
@@ -9,5 +9,8 @@ class CreateBlackmails < ActiveRecord::Migration
       t.datetime    :expired_at
       t.timestamps
     end
+    
+    add_index :blackmail, :user_id
+    
   end
 end

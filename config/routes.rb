@@ -1,12 +1,13 @@
 Blackmailr::Application.routes.draw do
 
-  root to: 'blackmails#index'
+  root to: 'blackmail#index'
+  
   get '/sign-up' => 'users#new'
   get '/profile' => 'users#edit'
 
   constraints id: /[1-9][0-9]*/ do
     resources :users, except: [:index, :edit, :new]
-    resources :blackmails, except: [:index]
+    resources :blackmail, except: [:index]
   end
   
   get '*bad_path' => redirect('/')

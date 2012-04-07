@@ -1,4 +1,4 @@
-class BlackmailsController < ApplicationController
+class BlackmailController < ApplicationController
 
   def index
   end
