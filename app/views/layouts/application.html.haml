@@ -14,7 +14,7 @@
   %body
     #wrap
       #header
-        - if true#logged_in
+        - if false#logged_in
           = link_to 'New', new_blackmail_path, class: 'push-state'
           = link_to 'Profile', '/profile', class: 'push-state'
           = link_to 'Sign out', '/sign-out'
