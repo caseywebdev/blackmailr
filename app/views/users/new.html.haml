@@ -8,6 +8,10 @@
   .field
     = f.label :password
     %br
-    = f.password_field :password_digest
+    = f.password_field :password
+  .field
+    = f.label :password_confirmation
+    %br
+    = f.password_field :password_confirmation   
   .actions
     = f.submit "Sign up"
