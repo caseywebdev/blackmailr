@@ -3,6 +3,8 @@ Blackmailr::Application.routes.draw do
   root to: 'blackmail#index'
   
   get '/sign-up' => 'users#new'
+  post '/sign-in' => 'users#sign_in'
+  post '/sign-out' => 'users#sign_out'
   get '/profile' => 'users#edit'
 
   constraints id: /[1-9][0-9]*/ do
