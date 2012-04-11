@@ -19,6 +19,7 @@
           = link_to 'Profile', '/profile', class: 'push-state'
           = link_to 'Sign out', '/sign-out'
         - else
-          %a#sign-in-or-sign-up Sign in or sign up!
+          = link_to 'Sign up', '/sign-up'
+          = link_to 'Sign in', '/sign-in'
       #main= yield
       #footer Blackmailr isn't responsible for anything, so don't sue us or we'll blackmail you =]
