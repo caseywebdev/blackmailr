@@ -1,13 +1,14 @@
 %h1 Sign in
-= form_for(@user) do |f|
+= form_tag('/sign-in') do
   = render 'shared/error_messages'
   .field
-    = f.label :email
+    = label_tag 'email'
     %br
-    = f.text_field :email
+    = text_field_tag 'email'
   .field
-    = f.label :password
+    = label_tag 'password'
     %br
-    = f.password_field :password
+    = password_field_tag 'password'
   .actions
-    = f.submit "Sign in"
+    = submit_tag "Sign in"
+.end
