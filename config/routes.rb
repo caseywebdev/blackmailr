@@ -2,10 +2,10 @@ Blackmailr::Application.routes.draw do
 
   root to: 'blackmail#index'
   
-  get '/sign-up' => 'users#new'
-  post '/sign-in' => 'users#sign_in'
-  post '/sign-out' => 'users#sign_out'
-  get '/profile' => 'users#edit'
+  get '/sign-up' => 'users#new', as: sign_up
+  post '/sign-in' => 'users#sign_in', as: :sign_in
+  post '/sign-out' => 'users#sign_out', as: :sign_out
+  get '/profile' => 'users#edit', as: :profile
 
   constraints id: /[1-9][0-9]*/ do
     resources :users, except: [:index, :edit, :new]
