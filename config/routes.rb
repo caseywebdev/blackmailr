@@ -2,8 +2,9 @@ Blackmailr::Application.routes.draw do
 
   root to: 'blackmail#index'
   
-  get '/sign-up' => 'users#new', as: sign_up
-  post '/sign-in' => 'users#sign_in', as: :sign_in
+  get '/sign-up' => 'users#new', as: :sign_up
+  get '/sign-in' => 'users#sign_in_form', as: :sign_in
+  post '/sign-in' => 'users#sign_in'
   post '/sign-out' => 'users#sign_out', as: :sign_out
   get '/profile' => 'users#edit', as: :profile
 
