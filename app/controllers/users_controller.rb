@@ -40,17 +40,17 @@ class UsersController < ApplicationController
      @user = User.new
   end
 
-#TODO (currently the sign in form is trying to insert?)
 #post request goes to this action (from the form) to sign the user in  
   def sign_in
-     #use the params given by sign_in_form to actually sign the user in
-    User.find_by_email(params[:session][:email]).try(:authenticate, params[:session][:password])
+    #use the params given by sign_in_form to actually sign the user in
+    user = User.find_by_email(params[:email]).try(:authenticate, params[:password])
     if user.nil?
       flash.now[:error] = "Invalid email/password combination."
       render 'sign_in_form'
     else
+#TODO
       #sign_in user
-      redirect_to user
+      redirect_to root_path
     end
   end
   
