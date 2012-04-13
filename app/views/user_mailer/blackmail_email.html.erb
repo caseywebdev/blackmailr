@@ -1,0 +1,35 @@
+<%
+# HTML formatted email for blackmailing victims
+# I know, you wanted to see haml - well one thing at a time!
+%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1><%= @victim_name %>, you've been blackmailed through blackmailr.com</h1>
+    <p>
+      Attached you will find a compromising photo.  If you choose not to comply to the below demands, this photo will be released for the world to see.
+    </p>
+    <h2>Demands</h2>
+    <ol>
+      <li>Demand 1</li>
+      <li>Demand 2</li>
+    </ol>
+    <p>
+      <strong>You must meet these demands for for time runs out!</strong>
+      <strong>D-day: <%= @d_day %></strong>
+    </p>
+    <p>
+      To meet the above demands and forstall your doom, follow this link: <url>.
+    </p>
+    <p>
+      If you are unable to meet the given demands and you know who is blackmailing you,<br/>
+      try blackmailing them instead!
+    </p>
+    <p>
+      Remember, blackmailr is not responsible for anything.  Don't even try to sue us or we will blackmail you!
+    </p>
+  </body>
+</html>

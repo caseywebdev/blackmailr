@@ -20,4 +20,8 @@ class Blackmail < ActiveRecord::Base
   
   # Validations
   validates :victim_email, email: true
+
+  # http://guides.rubyonrails.org/getting_started.html#building-a-multi-model-form
+  accepts_nested_attributes_for :user,  
+    :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120312182718) do
+ActiveRecord::Schema.define(:version => 20120413195407) do
 
   create_table "blackmail", :force => true do |t|
     t.integer  "user_id",      :null => false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120312182718) do
     t.datetime "expired_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "img_location"
   end
 
   add_index "blackmail", ["user_id"], :name => "index_blackmail_on_user_id"

@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 # Rails
 gem 'rails'
 
+# Javascript - Ryan needed this to run server
+  gem 'therubyracer'
+
 # For has_secure_password
 gem 'bcrypt-ruby'
 

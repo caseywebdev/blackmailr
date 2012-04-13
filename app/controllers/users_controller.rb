@@ -15,6 +15,11 @@ class UsersController < ApplicationController
     #once @user is defined properly, calling @user.save is all that’s needed to complete the registration
     if @user.save
         #Handle a successful save.
+
+        # Tell the UserMailer to send a welcome email after save
+        UserMailer.welcome_email(@user).deliver
+        # Note that welcome_email returns a Mail::Message object to which deliver belongs
+
         #sign_in @user #after a new user signs up, log them in
         flash[:success] = "Registration Successful!"
         redirect_to root_path
