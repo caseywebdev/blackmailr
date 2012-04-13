@@ -2,7 +2,7 @@
 = form_for(@blackmail) do |f|
   = render 'shared/error_messages'
   .field
-    = f.label :user_id
+    = f.label :user_id # TODO: This needs to be a hidden field
     %br
     = f.text_field :user_id
   .field

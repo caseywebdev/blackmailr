@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
   def show
+    @user = User.find(params[:id])
   end
  
 #create a new user (sign-up form)  
@@ -32,6 +33,7 @@ class UsersController < ApplicationController
 #TODO  
 #users "profile"
   def edit
+    @user = User.find(params[:id]) # Testing
   end
   
   def update

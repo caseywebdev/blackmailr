@@ -4,7 +4,9 @@ class UserMailer < ActionMailer::Base
   # Send when new users sign up
   def welcome_email(user)
     @user = user
-    @url  = root_path
+    # Note: Unlike controllers, the mailer instance doesn’t have any context about the incoming request
+    # Cite: http://guides.rubyonrails.org/action_mailer_basics.html#generating-urls-in-action-mailer-views
+    @url  = user_url(user, :host => "blackmailr.com") # Specifies named route
     mail(:to => user.email, :subject => "Who says blackmail can't be fun?")
   end
 
