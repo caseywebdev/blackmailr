@@ -10,3 +10,15 @@
     </ul>
   </div>
 <% end %>
+<% if @blackmail.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@blackmail.errors.count, "error") %> 
+        prohibited this blackmail from being saved:</h2>
+    <p>There were problems with the following fields:</p>
+    <ul>
+    <% @blackmail.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
