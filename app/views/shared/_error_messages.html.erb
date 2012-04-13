@@ -1,24 +1,28 @@
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> 
-        prohibited this user from being saved:</h2>
-    <p>There were problems with the following fields:</p>
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-<% if @blackmail.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@blackmail.errors.count, "error") %> 
-        prohibited this blackmail from being saved:</h2>
-    <p>There were problems with the following fields:</p>
-    <ul>
-    <% @blackmail.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<% if @user %>
+	<% if @user.errors.any? %>
+	  <div id="error_explanation">
+	    <h2><%= pluralize(@user.errors.count, "error") %> 
+	        prohibited this user from being saved:</h2>
+	    <p>There were problems with the following fields:</p>
+	    <ul>
+	    <% @user.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	  </div>
+	<% end %>
+<% end %>	
+<% if @blackmail %>
+	<% if @blackmail.errors.any? %>
+	  <div id="error_explanation">
+	    <h2><%= pluralize(@blackmail.errors.count, "error") %> 
+	        prohibited this blackmail from being saved:</h2>
+	    <p>There were problems with the following fields:</p>
+	    <ul>
+	    <% @blackmail.errors.full_messages.each do |msg| %>
+	      <li><%= msg %></li>
+	    <% end %>
+	    </ul>
+	  </div>
+	<% end %>
+<% end %>	

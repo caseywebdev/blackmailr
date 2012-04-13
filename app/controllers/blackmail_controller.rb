@@ -7,7 +7,6 @@ class BlackmailController < ApplicationController
   end
   
   def new
-    #this isn't working, error: "Could not find table 'blackmail'" :'(
     @blackmail = Blackmail.new
   end
   
