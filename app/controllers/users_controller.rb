@@ -48,8 +48,7 @@ class UsersController < ApplicationController
       flash.now[:error] = "Invalid email/password combination."
       render 'sign_in_form'
     else
-#TODO
-      #sign_in user
+      sign_in_cookies user
       redirect_to root_path
     end
   end
