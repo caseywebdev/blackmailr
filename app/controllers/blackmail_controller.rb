@@ -8,6 +8,9 @@ class BlackmailController < ApplicationController
   
   def new
     @blackmail = Blackmail.new
+    3.times do
+      demand = @blackmail.demands.build
+    end
   end
   
   def create
