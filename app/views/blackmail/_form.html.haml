@@ -1,6 +1,6 @@
 %h1 Create Blackmail
 = form_for(@blackmail) do |f|
-  = render 'shared/error_messages', :object => f.object %>
+  = render 'shared/error_messages', :object => f.object
   .field
     = f.hidden_field :user_id
   .field
