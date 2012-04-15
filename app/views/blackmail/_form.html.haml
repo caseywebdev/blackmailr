@@ -1,0 +1,36 @@
+%h1 Create Blackmail
+= form_for(@blackmail) do |f|
+  = render 'shared/error_messages'
+  .field
+    = f.hidden_field :user_id
+  .field
+    = f.label :title
+    %br
+    = f.text_field :title
+  .field
+    = f.label :description
+    %br
+    = f.text_area :description
+  .field
+    = f.label :victim_name
+    %br
+    = f.text_field :victim_name
+  .field
+    = f.label :victim_email
+    %br
+    = f.text_field :victim_email
+  .field
+    = f.label :set_expire_time
+    %br
+    = f.text_field :expired_at  
+  .field
+    = f.fields_for :img_location do |builder| 
+      = builder.label :blackmail_image
+      %br
+      = builder.file_field :img_location
+  .field
+    = f.fields_for :demands do |builder| 
+      = render "demand_fields", :f => builder
+  = link_to_add_fields "Add Demand", f, :demands
+  .actions
+    = f.submit "That's Blackmail!"

@@ -17,6 +17,8 @@ class Blackmail < ActiveRecord::Base
   # Relations  
   belongs_to :user
   has_many :demands, dependent: :delete_all
+
+  accepts_nested_attributes_for :demands, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
   
   # Validations
   validates :victim_email, email: true
