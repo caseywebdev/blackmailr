@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     #once @user is defined properly, calling @user.save is all that’s needed to complete the registration
     if @user.save
         #Handle a successful save.
-
+        sign_in_cookies @user
         # Tell the UserMailer to send a welcome email after save
         UserMailer.welcome_email(@user).deliver
         # Note that welcome_email returns a Mail::Message object to which deliver belongs
@@ -50,19 +50,21 @@ class UsersController < ApplicationController
 #post request goes to this action (from the form) to sign the user in  
   def sign_in
     #use the params given by sign_in_form to actually sign the user in
-    user = User.find_by_email(params[:email]).try(:authenticate, params[:password])
-    if user.nil?
-      flash.now[:error] = "Invalid email/password combination."
-      render 'sign_in_form'
-    else
+    user = User.find_by_email(params[:email])
+    if user && user.authenticate(params[:password])
       sign_in_cookies user
       redirect_to root_path
+    else
+      flash.now[:error] = "Invalid email/password combination."
+      render 'sign_in_form'
     end
   end
   
 #TODO  
 #sign the user out (destroy the session/cookies)  
   def sign_out
+    sign_out
+    redirect_to root_path
   end
   
 end

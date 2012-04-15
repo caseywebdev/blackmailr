@@ -11,10 +11,11 @@
     /[if lt IE 9]
       = javascript_include_tag '//html5shiv.googlecode.com/svn/trunk/html5.js'
     = javascript_include_tag 'application'
+    = javascript_include_tag 'application_jquery'
   %body
     #wrap
       #header
-        - if true#logged_in
+        - if signed_in?
           = link_to 'New', new_blackmail_path, class: 'push-state'
           = link_to 'Profile', '/profile', class: 'push-state'
           = link_to 'Sign out', '/sign-out'
