@@ -18,6 +18,18 @@ class BlackmailController < ApplicationController
       .filter { |s| not s.empty? }
       .each { |description| @blackmail.demands.build description: description }
     if @blackmail.save
+      #upload image:
+            #get the picture from the form
+            upload = params[:img_location]
+            #TODO: will need to change the name to be id_1.jpg, id_2.jpg...
+            name =  upload.original_filename
+            #TODO: will need to change this to assets/images 
+            directory = "public/images"
+            # create the file path
+            path = File.join(directory, name)
+            # write the file
+            File.open(path, "wb") { |f| f.write(upload.read) }
+            #TODO: resize with rmagic before save
       # rl: Send blackmail_email after save
       # Note that rails doesn't send email by default from development environment
       # View console for confirmation that email is properly formed
