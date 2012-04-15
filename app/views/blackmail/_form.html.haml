@@ -20,21 +20,20 @@
     %br
     = f.text_field :victim_email
   .field
-    = f.label :blackmail_will_expire_in_how_many_minutes_from_now?
+    = f.label :blackmail_will_be_exposed_in_how_many_minutes_from_now?
     %br
     = f.text_field :expired_at  
   .field
-    = f.fields_for :img_location do |builder| 
-      = builder.label :blackmail_image
-      %br
-      = builder.file_field :img_location
+    = label_tag :blackmail_image
+    %br
+    = file_field_tag :img_location
   .field
     = f.fields_for :demands do |k| 
-      = builder.label :demands_one_per_line
+      = k.label :demands_one_per_line
+      /%br
+      /= k.label :complete?
+      /= k.check_box :completed
       %br
-      = builder.label :complete?
-      = builder.check_box :completed
-      %br
-      = builder.text_area(:description, :rows => 3)  
+      = k.text_area(:description, :rows => 3)  
   .actions
     = f.submit "That's Blackmail!"
