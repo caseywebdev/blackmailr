@@ -2,7 +2,9 @@
   .blackmail
     .header
       .name @blackmail.victim_name
-      .time @(@blackmail.expired_at)
+      .time
+        Expires in
+        %span.countdown{data: {'countdown-seconds' => 5.days.from_now.to_i}}
       .title @blackmail.title
     .main
       = image_tag 'sample.jpg'
