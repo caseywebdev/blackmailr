@@ -45,7 +45,7 @@ group :test do
   gem 'capybara'
 
   #adds model information
-  gem 'annotate'
+  gem 'annotate', git: 'git://github.com/ctran/annotate_models.git'
 end
 
 # Asset handlers
