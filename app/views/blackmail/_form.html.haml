@@ -10,7 +10,7 @@
   .field
     = f.label :description
     %br
-    = f.text_area :description
+    = f.text_area(:description, :rows => 3)
   .field
     = f.label :victim_name
     %br
@@ -20,7 +20,7 @@
     %br
     = f.text_field :victim_email
   .field
-    = f.label :set_expire_time
+    = f.label :blackmail_will_expire_in_how_many_minutes_from_now?
     %br
     = f.text_field :expired_at  
   .field
@@ -29,8 +29,12 @@
       %br
       = builder.file_field :img_location
   .field
-    = f.fields_for :demands do |builder| 
-      = render "demand_fields", :f => builder
-  = link_to_add_fields "Add Demand", f, :demands
+    = f.fields_for :demands do |k| 
+      = builder.label :demands_one_per_line
+      %br
+      = builder.label :complete?
+      = builder.check_box :completed
+      %br
+      = builder.text_area(:description, :rows => 3)  
   .actions
     = f.submit "That's Blackmail!"
