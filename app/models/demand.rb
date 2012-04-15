@@ -2,11 +2,11 @@
 #
 # Table name: demands
 #
-#  id         	:integer        not null, primary key
+#  id           :integer         not null, primary key
+#  blackmail_id :integer         not null
 #  description  :string(255)
-#  completed    :boolean		not null, default set to false
-#  created_at 	:datetime		not null
-#  updated_at 	:datetime		not null
+#  completed    :boolean         default(FALSE), not null
+#  updated_at   :datetime
 #
 
 class Demand < ActiveRecord::Base

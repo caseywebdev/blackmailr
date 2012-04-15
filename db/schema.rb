@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120415031906) do
+ActiveRecord::Schema.define(:version => 20120415210702) do
 
   create_table "blackmail", :force => true do |t|
     t.integer  "user_id",      :null => false
@@ -27,9 +27,10 @@ ActiveRecord::Schema.define(:version => 20120415031906) do
   add_index "blackmail", ["user_id"], :name => "index_blackmail_on_user_id"
 
   create_table "demands", :force => true do |t|
-    t.integer "blackmail_id",                    :null => false
-    t.string  "description"
-    t.boolean "completed",    :default => false, :null => false
+    t.integer  "blackmail_id",                    :null => false
+    t.string   "description"
+    t.boolean  "completed",    :default => false, :null => false
+    t.datetime "updated_at"
   end
 
   add_index "demands", ["blackmail_id"], :name => "index_demands_on_blackmail_id"
