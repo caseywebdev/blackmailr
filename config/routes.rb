@@ -12,9 +12,7 @@ Blackmailr::Application.routes.draw do
     resources :users, except: [:index, :edit, :new]
     resources :blackmail, except: [:index]
   end
-  
-  get '*bad_path' => redirect('/')
-  
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

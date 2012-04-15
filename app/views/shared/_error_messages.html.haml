@@ -1,0 +1,6 @@
+- if object.errors.any?
+  #error_explanation
+    %h2 #{object.errors.count} #{'error'.pluralize object.errors.count} prohibited this #{object.class.to_s.underscore.humanize.downcase} from being saved:
+    %ul
+      - object.errors.full_messages.each do |msg|
+        %li= msg

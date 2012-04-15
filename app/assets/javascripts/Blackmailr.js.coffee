@@ -6,4 +6,3 @@ if not Blackmailr? and Extrascore?
         #ui stuff
         delete Blackmailr.Ui.init;
   _.init Blackmailr
-  

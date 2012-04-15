@@ -22,7 +22,7 @@ class UsersController < ApplicationController
         # Note that welcome_email returns a Mail::Message object to which deliver belongs
 
         #sign_in @user #after a new user signs up, log them in
-        flash[:success] = "Registration Successful!"
+        flash[:success] = 'Registration Successful!'
         redirect_to root_path
     else
     #re-render the signup page if invalid signup data is received.
@@ -50,19 +50,19 @@ class UsersController < ApplicationController
 #post request goes to this action (from the form) to sign the user in  
   def sign_in
     #use the params given by sign_in_form to actually sign the user in
-    user = User.find_by_email(params[:email])
-    if user && user.authenticate(params[:password])
+    user = User.find_by_email(params[:user][:email])
+    if user && user.authenticate(params[:user][:password])
       sign_in_cookies user
       redirect_to root_path
     else
-      flash.now[:error] = "Invalid email/password combination."
-      render 'sign_in_form'
+      flash.now[:error] = 'Invalid email/password combination.'
+      render :sign_in_form
     end
   end
    
 #sign the user out (destroy the session/cookies)  
   def sign_out
-    sign_out
+    cookies.delete :remember_token
     redirect_to root_path
   end
   
