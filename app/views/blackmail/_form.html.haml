@@ -1,8 +1,8 @@
 %h1 Create Blackmail
-= form_for(@blackmail) do |f|
+= form_for(@blackmail, :html => {:multipart => true}) do |f|
   = render 'shared/error_messages', :object => f.object
   .field
-    = f.hidden_field :user_id
+    = f.hidden_field(:user_id, :value => 3)
   .field
     = f.label :title
     %br
@@ -30,9 +30,9 @@
   .field
     = f.fields_for :demands do |k| 
       = k.label :demands_one_per_line
-      /%br
-      /= k.label :complete?
-      /= k.check_box :completed
+      %br
+      = k.label :complete?
+      = k.check_box :completed
       %br
       = k.text_area(:description, :rows => 3)  
   .actions
