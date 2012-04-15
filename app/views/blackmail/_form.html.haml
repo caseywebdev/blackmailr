@@ -26,7 +26,7 @@
   .field
     = label_tag :blackmail_image
     %br
-    = file_field_tag :img_location
+    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'
   .field
     = f.fields_for :demands do |k| 
       = k.label :demands_one_per_line
