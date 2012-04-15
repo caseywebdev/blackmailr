@@ -16,6 +16,10 @@ module UsersHelper
     @current_user ||= user_from_remember_token
   end
 
+  def current_user?(user)
+    user == current_user
+  end
+  
   def sign_out
     current_user = nil
     cookies.delete(:remember_token)

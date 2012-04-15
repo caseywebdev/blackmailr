@@ -59,8 +59,7 @@ class UsersController < ApplicationController
       render 'sign_in_form'
     end
   end
-  
-#TODO  
+   
 #sign the user out (destroy the session/cookies)  
   def sign_out
     sign_out
