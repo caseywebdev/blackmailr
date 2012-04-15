@@ -8,6 +8,7 @@ class BlackmailController < ApplicationController
   
   def new
     @blackmail = Blackmail.new
+    @user = User.new
   end
   
   def create
