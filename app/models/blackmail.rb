@@ -17,13 +17,16 @@ class Blackmail < ActiveRecord::Base
   # Relations  
   belongs_to :user
   has_many :demands, dependent: :delete_all
-
-  accepts_nested_attributes_for :demands, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
   
   # Validations
   validates :victim_email, email: true
-
-  # http://guides.rubyonrails.org/getting_started.html#building-a-multi-model-form
-  accepts_nested_attributes_for :user,  
-    :reject_if => proc { |attrs| attrs.all? { |k, v| v.blank? } }
+  validate :at_least_one_demand
+    
+  private
+  
+  def at_least_one_demand
+    unless demands.any?
+      errors.add_to_base 'You must specify at least one demand.'
+  end
+  
 end
