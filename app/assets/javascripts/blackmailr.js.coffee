@@ -15,6 +15,6 @@ if not Blackmailr? and Extrascore?
           s -= (d = Math.floor s/(60*60*24))*(60*60*24)
           s -= (h = Math.floor s/(60*60))*(60*60)
           s -= (m = Math.floor s/60)*60
-          $t.html "#{d}d#{h}h#{m}m#{s}s"
+          $t.html "#{d}d #{h}h #{m}m #{s}s"
         
   _.init Blackmailr
