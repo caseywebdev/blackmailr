@@ -1,0 +1,27 @@
+%h1 Home
+
+%table
+  %thead
+    %tr
+      %th(colspan = 4)
+        Blackmail List
+    %tr
+      %th
+        Title
+      %th
+        Expires
+      %th
+        Victim
+      %th
+        Desc.
+  - @blackmail.each do |black|
+    %tbody
+      %tr
+        %td
+          = link_to black.title, { :controller => "blackmail", :action => "edit", :id => black.id }
+        %td
+          =black.expired_at
+        %td
+          =black.victim_name
+        %td
+          =black.description

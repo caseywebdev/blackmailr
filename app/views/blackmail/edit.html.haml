@@ -1,0 +1,33 @@
+%h1 Edit =black.title
+
+= form_for(@blackmail) do |f|
+  -#= render 'shared/error_messages'
+  -# user_id currently needs to be inputted directly
+  -# need to grab user_id from session/cookie and insert into database
+  .field
+    = f.label :user_id
+    %br
+    = f.text_field :user_id
+  .field
+    = f.label :title
+    %br
+    = f.text_field :title
+  .field
+    = f.label :description
+    %br
+    = f.text_field :description
+  .field
+    = f.label :victim_name
+    %br
+    = f.text_field :victim_name  
+  .field
+    = f.label :victim_email
+    %br
+    = f.text_field :victim_email
+  .field
+    = f.label :expired_at
+    %br
+    -# http://stackoverflow.com/questions/6273625/setting-datetime-field-using-ruby-form-helpers
+    = select_datetime Date.today, :prefix => :expired_at
+  .actions
+    = f.submit "Update Blackmail"
