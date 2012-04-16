@@ -14,13 +14,12 @@
   %body
     #wrap
       #header
-        -#commented out if and else
-        -#- if false#logged_in
-        = link_to 'New', new_blackmail_path, class: 'push-state'
-        = link_to 'Profile', '/profile', class: 'push-state'
-        = link_to 'Sign out', '/sign-out'
-        -#- else
-        = link_to 'Sign up', '/sign-up'
-        = link_to 'Sign in', '/sign-in'
+        - if signed_in? 
+          = link_to 'New', new_blackmail_path, class: 'push-state'
+          = link_to 'Blackmail', '/home', class: 'push-state'
+          = link_to 'Sign out', '/sign-out', data: {method: 'post'}
+        - else
+          = link_to 'Sign up', '/sign-up'
+          = link_to 'Sign in', '/sign-in'
       #main= yield
       #footer Blackmailr isn't responsible for anything, so don't sue us or we'll blackmail you =]

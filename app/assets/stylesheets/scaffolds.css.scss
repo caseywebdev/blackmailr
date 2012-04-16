@@ -1,3 +1,5 @@
+@import 'config';
+
 body {
   background-color: #fff;
   color: #333;
@@ -9,6 +11,24 @@ p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size: 13px;
   line-height: 18px; }
+
+form {
+  margin: 15px 25px;
+}
+
+table {
+  margin: 15px 25px;
+  border: solid 1px;
+  width: 93%;
+}
+
+table thead tr{ 
+  background: $main-color $noise;
+}
+
+table tbody tr td{
+	border: solid 1px;
+}
 
 pre {
   background-color: #eee;
