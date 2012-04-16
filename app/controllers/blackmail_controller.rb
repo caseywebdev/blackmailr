@@ -4,6 +4,9 @@ class BlackmailController < ApplicationController
   end
 
   def show
+  	#need to change id=1 to user_id
+  	@user=User.find_by_id(1)
+  	@blackmail=@user.blackmail.all
   end
   
   def new
@@ -48,7 +51,9 @@ class BlackmailController < ApplicationController
     end
   end
   
-  def edit
+  def edit 
+  	@blackmail=Blackmail.find_by_id(params[:id])
+  	render 'edit'
   end
   
   def update

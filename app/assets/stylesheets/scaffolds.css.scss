@@ -1,3 +1,5 @@
+@import 'config';
+
 body {
   background-color: #fff;
   color: #333;
@@ -11,7 +13,21 @@ p, ol, ul, td {
   line-height: 18px; }
 
 form {
-  padding: 15px 25px;
+  margin: 15px 25px;
+}
+
+table {
+  margin: 15px 25px;
+  border: solid 1px;
+  width: 93%;
+}
+
+table thead tr{ 
+  background: $main-color $noise;
+}
+
+table tbody tr td{
+	border: solid 1px;
 }
 
 pre {
