@@ -6,16 +6,14 @@ Blackmailr::Application.routes.draw do
   get '/sign-in' => 'users#sign_in_form', as: :sign_in
   post '/sign-in' => 'users#sign_in'
   post '/sign-out' => 'users#sign_out', as: :sign_out
-  get '/profile' => 'users#edit', as: :profile
-  get '/blackmail/new' => 'blackmail#new'
+  get 'home' => 'blackmail#show', as: :home
+  get 'edit' => 'blackmail#edit', as: :edit 
 
   constraints id: /[1-9][0-9]*/ do
     resources :users, except: [:index, :edit, :new]
     resources :blackmail, except: [:index]
   end
-  
-  get '*bad_path' => redirect('/')
-  
+    
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
