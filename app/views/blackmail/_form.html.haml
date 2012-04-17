@@ -2,7 +2,7 @@
 = form_for(@blackmail, :html => {:multipart => true}) do |f|
   = render 'shared/error_messages', :object => f.object
   .field
-    = f.hidden_field(:user_id, :value => @user_id)
+    = f.hidden_field(:user_id, :value => 3)
   .field
     = f.label :title
     %br
