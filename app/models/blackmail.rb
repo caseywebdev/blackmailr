@@ -23,7 +23,7 @@ class Blackmail < ActiveRecord::Base
   
   # Validations
   validates :victim_email, email: true
-  #TODO: need to fix "split" in blackmail#new, until then, this breaks the code:
+  #TODO: need to fix "split" in blackmail#create, until then, this breaks the code:
   #validate :at_least_one_demand
     
   private
