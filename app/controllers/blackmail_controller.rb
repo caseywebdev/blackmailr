@@ -14,6 +14,7 @@ class BlackmailController < ApplicationController
   
   def new
     @blackmail = Blackmail.new
+    @user_id = current_user.id
   end
   
   def create
