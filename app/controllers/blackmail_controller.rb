@@ -14,31 +14,26 @@ class BlackmailController < ApplicationController
   
   def new
     @blackmail = Blackmail.new
-    @user = User.new
-    #user = get user from cookie somehow
-    1.times{ @blackmail.demands.build }
   end
   
   def create
     @blackmail = Blackmail.new params[:blackmail]
-    #TODO: fix this (error is undefined method `split' for nil:NilClass)
-    #params[:blackmail][:demands] #or just [:demands?]
-    #  .split("\n")
-    #  .map(&:clean)
-    #  .filter { |s| not s.empty? }
-    #  .each { |description| @blackmail.demands.build description: description }
+    @blackmail.user_id = current_user
+    params[:demands][:description] #or just [:demands?]
+      .split("\n")
+      .map(&:clean)
+      .select { |s| not s.empty? }
+      .each { |description| @blackmail.demands.new description: description }
     if @blackmail.save
       #upload image:
             #get the picture from the form
             upload = params[:img_location]
-            #TODO: will need to change the name to be id_1.jpg, id_2.jpg...
-            name =  upload.original_filename
-            #TODO: will need to change this to assets/images 
-            directory = "public/images"
+            name =  "#{@blackmail.id}_0.jpg"
+            directory = "#{Rails.root}/app/assets/images/blackmail"
             # create the file path
             path = File.join(directory, name)
             # write the file
-            File.open(path, "wb") { |f| f.write(upload.read) }
+            File.open(path, 'wb') { |f| f.write upload.read }
             #TODO: resize with rmagic before save
       # rl: Send blackmail_email after save
       # Note that rails doesn't send email by default from development environment

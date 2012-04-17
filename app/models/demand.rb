@@ -11,7 +11,4 @@
 
 class Demand < ActiveRecord::Base
   belongs_to :blackmail
-
-  # Validations
-  validates :completed,  :presence => true
 end
