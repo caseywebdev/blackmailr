@@ -1,13 +1,8 @@
-%h1 Edit @blackmail.title
-
-= form_for(@blackmail) do |f|
-  -#= render 'shared/error_messages'
-  -# user_id currently needs to be inputted directly
-  -# need to grab user_id from session/cookie and insert into database
+%h1 Edit Blackmail
+= form_for(@blackmail, :html => {:multipart => true}) do |f|
+  = render 'shared/error_messages', :object => f.object
   .field
-    = f.label :user_id
-    %br
-    = f.text_field :user_id 
+    = f.hidden_field(:user_id, :value => 3)
   .field
     = f.label :title
     %br
@@ -15,19 +10,26 @@
   .field
     = f.label :description
     %br
-    = f.text_field :description
+    = f.text_area(:description, :rows => 3)
   .field
     = f.label :victim_name
     %br
-    = f.text_field :victim_name  
+    = f.text_field :victim_name
   .field
     = f.label :victim_email
     %br
     = f.text_field :victim_email
   .field
-    = f.label :expired_at
+    = f.label :blackmail_will_be_exposed_in_how_many_minutes_from_now?
     %br
-    -# http://stackoverflow.com/questions/6273625/setting-datetime-field-using-ruby-form-helpers
-    = select_datetime Date.today, :prefix => :expired_at
+    = f.text_field :expired_at  
+  .field
+    = fields_for :demands do |builder| 
+      = builder.label 'List your demands. Use a new line to separate multiple demands.'
+      = builder.text_area :description, rows: 3  
+  .field
+    = label_tag :blackmail_image
+    %br
+    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'      
   .actions
     = f.submit "Update Blackmail"
