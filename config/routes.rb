@@ -8,6 +8,7 @@ Blackmailr::Application.routes.draw do
   post '/sign-out' => 'users#sign_out', as: :sign_out
   get 'home' => 'blackmail#show', as: :home
   get 'edit' => 'blackmail#edit', as: :edit 
+  get 'new' => 'blackmail#new', as: :new
   
   constraints id: /[1-9][0-9]*/ do
     resources :users, except: [:index, :edit, :new]

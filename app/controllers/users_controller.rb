@@ -53,7 +53,7 @@ class UsersController < ApplicationController
     user = User.find_by_email(params[:user][:email])
     if user && user.authenticate(params[:user][:password])
       sign_in_cookies user
-      redirect_to root_path
+      redirect_to :home
     else
       flash.now[:error] = 'Invalid email/password combination.'
       render :sign_in_form
