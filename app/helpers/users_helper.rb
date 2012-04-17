@@ -20,6 +20,11 @@ module UsersHelper
     user == current_user
   end
   
+  def deny_access
+    #TODO: redirect to sign-in path
+    redirect_to root_path, :notice => "Please sign in to access this page."
+  end
+  
   private
 
     def user_from_remember_token

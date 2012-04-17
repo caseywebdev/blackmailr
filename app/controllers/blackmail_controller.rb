@@ -1,5 +1,6 @@
 class BlackmailController < ApplicationController
-
+  before_filter :authenticate, :only => [:new, :create, :edit]
+  
   def index
   end
 
@@ -14,6 +15,7 @@ class BlackmailController < ApplicationController
   def new
     @blackmail = Blackmail.new
     @user = User.new
+    #user = get user from cookie somehow
     1.times{ @blackmail.demands.build }
   end
   
@@ -65,5 +67,11 @@ class BlackmailController < ApplicationController
 
   def destroy
   end
+  
+private
+
+    def authenticate
+      deny_access unless signed_in?
+    end
   
 end
