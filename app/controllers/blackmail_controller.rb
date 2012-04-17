@@ -1,5 +1,5 @@
 class BlackmailController < ApplicationController
-  before_filter :authenticate, :only => [:new, :create, :edit]
+  before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
   end
