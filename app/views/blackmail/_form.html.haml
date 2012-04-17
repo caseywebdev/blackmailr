@@ -2,7 +2,7 @@
 = form_for(@blackmail, :html => {:multipart => true}) do |f|
   = render 'shared/error_messages', :object => f.object
   .field
-    = f.hidden_field(:user_id, :value => @user.id)
+    = f.hidden_field(:user_id, :value => 3)
   .field
     = f.label :title
     %br
@@ -24,16 +24,16 @@
     %br
     = f.text_field :expired_at  
   .field
+    = f.fields_for :demands do |builder| 
+      = builder.label :demands_one_per_line
+      %br
+      = builder.label :complete?
+      = builder.check_box :completed
+      %br
+      = builder.text_area(:description, :rows => 3)  
+  .field
     = label_tag :blackmail_image
     %br
-    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'
-  .field
-    = f.fields_for :demands do |k| 
-      = k.label :demands_one_per_line
-      %br
-      = k.label :complete?
-      = k.check_box :completed
-      %br
-      = k.text_area(:description, :rows => 3)  
+    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'      
   .actions
     = f.submit "That's Blackmail!"

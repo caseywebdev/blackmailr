@@ -14,15 +14,17 @@ class BlackmailController < ApplicationController
   def new
     @blackmail = Blackmail.new
     @user = User.new
+    1.times{ @blackmail.demands.build }
   end
   
   def create
     @blackmail = Blackmail.new params[:blackmail]
-    params[:demands]
-      .split("\n")
-      .map(&:clean)
-      .filter { |s| not s.empty? }
-      .each { |description| @blackmail.demands.build description: description }
+    #TODO: fix this (error is undefined method `split' for nil:NilClass)
+    #params[:blackmail][:demands] #or just [:demands?]
+    #  .split("\n")
+    #  .map(&:clean)
+    #  .filter { |s| not s.empty? }
+    #  .each { |description| @blackmail.demands.build description: description }
     if @blackmail.save
       #upload image:
             #get the picture from the form
