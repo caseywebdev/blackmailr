@@ -14,36 +14,40 @@ class BlackmailController < ApplicationController
   
   def new
     @blackmail = Blackmail.new
+    #probably don't even this this since we overwrite it in create
     @user_id = current_user.id
   end
   
   def create
     @blackmail = Blackmail.new params[:blackmail]
-    @blackmail.user_id = current_user
-    params[:demands][:description] #or just [:demands?]
-      .split("\n")
-      .map(&:clean)
-      .select { |s| not s.empty? }
-      .each { |description| @blackmail.demands.new description: description }
+    @blackmail.user_id = current_user.id
+    #save demands (split the answer from the text box into multiple demands):
+      params[:demands][:description] #or just [:demands?]
+        .split("\n")
+        .map(&:clean)
+        .select { |s| not s.empty? }
+        .each { |description| @blackmail.demands.new description: description }
     if @blackmail.save
       #upload image:
-            #get the picture from the form
-            upload = params[:img_location]
-            name =  "#{@blackmail.id}_0.jpg"
-            directory = "#{Rails.root}/app/assets/images/blackmail"
-            # create the file path
-            path = File.join(directory, name)
-            # write the file
-            File.open(path, 'wb') { |f| f.write upload.read }
-            #TODO: resize with rmagic before save
-      # rl: Send blackmail_email after save
-      # Note that rails doesn't send email by default from development environment
-      # View console for confirmation that email is properly formed
-      puts 'Victim Email'+params[:blackmail][:victim_email]
-      UserMailer.blackmail_email(params[:blackmail]).deliver
-      
-      flash[:success] = 'Blackmail successfully sent!'
-      
+            if(params[:img_location])
+                #get the picture from the form
+                upload = params[:img_location]
+                name =  "#{@blackmail.id}_0.jpg"
+                directory = "#{Rails.root}/app/assets/images/blackmail"
+                # create the file path
+                path = File.join(directory, name)
+                # write the file
+                File.open(path, 'wb') { |f| f.write upload.read }
+                #TODO: resize with rmagic before save
+             end
+      #send email:
+            # rl: Send blackmail_email after save
+            # Note that rails doesn't send email by default from development environment
+            # View console for confirmation that email is properly formed
+            puts 'Victim Email'+params[:blackmail][:victim_email]
+            UserMailer.blackmail_email(params[:blackmail]).deliver
+            
+            flash[:success] = 'Blackmail successfully sent!'
       # TODO: Redirect user to list of all user blackmails
       redirect_to :root
 
