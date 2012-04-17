@@ -19,7 +19,7 @@ class Blackmail < ActiveRecord::Base
   has_many :demands, dependent: :delete_all
   
   #this might fix the "expecting 'Demands' got 'Array' error when posting new blackmail:
-  #accepts_nested_attributes_for :demands
+  accepts_nested_attributes_for :demands
   
   # Validations
   validates :victim_email, email: true
