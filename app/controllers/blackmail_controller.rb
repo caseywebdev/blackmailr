@@ -4,8 +4,7 @@ class BlackmailController < ApplicationController
   end
 
   def show
-  	#need to change id=1 to user_id
-  	@user=User.find_by_id(1)
+  	@user=User.find_by_remember_token(cookies[:remember_token])
   	@blackmail=@user.blackmail.all
   end
   
