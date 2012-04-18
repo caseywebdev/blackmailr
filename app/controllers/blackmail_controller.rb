@@ -3,7 +3,7 @@ class BlackmailController < ApplicationController
   
   def index
     #get all expired blackmails:
-    #@expired_blackmails = Event.find(:all, :conditions => ['expired_at >= ?', DateTime.now])
+    @expired_blackmails = Blackmail.where("expired_at >= ?", DateTime.now)
   end
 
   def view
