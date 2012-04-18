@@ -6,5 +6,6 @@
 = require backbone_rails_sync	  	
 = require backbone_datalink  	
 = require extrascore 
+= require jquery_nested_form
 = require blackmailr 	
 */

@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'nested_form', :git => 'https://github.com/ryanb/nested_form.git'
+
 # Rails
 gem 'rails'
 

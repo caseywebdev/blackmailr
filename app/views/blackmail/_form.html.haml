@@ -1,5 +1,5 @@
 %h1 Create Blackmail
-= form_for(@blackmail, :html => {:multipart => true}) do |f|
+= nested_form_for(@blackmail, :html => {:multipart => true}) do |f|
   = render 'shared/error_messages', :object => f.object
   .field
     = f.hidden_field(:user_id, :value => @user_id)
@@ -27,10 +27,11 @@
   .field
     = fields_for :demands do |builder| 
       = builder.label 'List your demands. Use a new line to separate multiple demands.'
-      = builder.text_area :description, rows: 3  
+      = builder.text_area(:description, :rows => 3)
   .field
-    = label_tag :blackmail_image
-    %br
-    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'      
+    = f.fields_for :images do |image_form|
+      = image_form.text_field :name
+      %br
+      = image_form.link_to_remove "Remove this image"
   .actions
     = f.submit "That's Blackmail!"
