@@ -1,14 +1,14 @@
-- 10.times do
+- @expired_blackmails.each do |i|
   .blackmail
     .header
-      .name @blackmail.victim_name
+      .name #{i[:victim_name]}
       .time
         Expires in
         %span.countdown{data: {'countdown-seconds' => 5.days.from_now.to_i}}
-      .title @blackmail.title
+      .title #{i[:title]}
     .main
       = image_tag 'sample.jpg'
-      .description @blackmail.description
+      .description #{i[:description]}
     .footer
 .loading-more
   %div Loading more blackmail...

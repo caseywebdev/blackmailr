@@ -4,6 +4,11 @@ class BlackmailController < ApplicationController
   def index
     #get all expired blackmails:
     @expired_blackmails = Blackmail.where("expired_at >= ?", DateTime.now)
+    @expired_blackmails.each do |i|
+      puts "**********************"
+      puts i[:id]
+    end
+    
   end
 
   def view
