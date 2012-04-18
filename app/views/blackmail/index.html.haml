@@ -4,12 +4,17 @@
       .name #{i[:victim_name]}
       .time
         Expires in
-        %span.countdown{data: {'countdown-seconds' => 5.days.from_now.to_i}}
+        - @time_left = DateTime.now - i[:expired_at].to_datetime
+        - if(@time_left.to_i <= 0)
+          %span
+          ="EXPIRED"
+        - else
+          %span.countdown{data: {'countdown-seconds' => @time_left.to_i}}
       .title #{i[:title]}
     .main
       - 5.times do|k|
-        - @location = "#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"
-        - if(FileTest.exists?(@location))
+        - if(FileTest.exists?("#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"))
+          - @location = "/assets/blackmail/#{i[:id]}_#{k}.jpg"
           = image_tag @location
           %br
       .description #{i[:description]}
