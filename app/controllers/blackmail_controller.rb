@@ -2,6 +2,8 @@ class BlackmailController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
+    #get all expired blackmails:
+    #@expired_blackmails = Event.find(:all, :conditions => ['expired_at >= ?', DateTime.now])
   end
 
   def view
@@ -33,7 +35,6 @@ class BlackmailController < ApplicationController
         .select { |s| not s.empty? }
         .each { |description| @blackmail.demands.new description: description }
     if @blackmail.save
-      puts "**************HELLO????"
       #upload image:
           5.times do|i|
                 @temp_string = "images_#{i}"
