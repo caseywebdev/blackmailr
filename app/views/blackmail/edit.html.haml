@@ -22,12 +22,14 @@
   .field
     = f.label :specify_blackmail_expiration_time
     %br
-    = f.date_select :expired_at  
+    Date: 
+    = f.date_select :expired_at
+    Time: 
     = f.time_select :expired_at, :ignore_date => true 
   .field
     = fields_for :demands do |builder| 
       = builder.label 'List your demands. Use a new line to separate multiple demands.'
-      = builder.text_area :description, rows: 3  
+      = builder.text_area :description, rows: 3
   .field
     - 5.times do |i|
       = label_tag :blackmail_image
