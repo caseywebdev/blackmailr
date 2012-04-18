@@ -26,8 +26,11 @@
     = f.time_select :expired_at, :ignore_date => true 
   .field
     = fields_for :demands do |builder| 
-      = builder.label 'List your demands. Use a new line to separate multiple demands.'
-      = builder.text_area :description, rows: 3  
+      = builder.label 'Demands:'
+      %br
+      = builder.label 'Completed?'
+      = builder.check_box :completed, :value => @demands.completed?
+      = builder.text_area :description, rows: 3, :value => @demands.description
   .field
     - 5.times do |i|
       = label_tag :blackmail_image

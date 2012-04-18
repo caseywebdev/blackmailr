@@ -60,6 +60,7 @@ class BlackmailController < ApplicationController
   
   def edit 
   	@blackmail=Blackmail.find_by_id(params[:id])
+  	@demands=Demand.find_by_blackmail_id(params[:id])
   	render 'edit'
   end
   
