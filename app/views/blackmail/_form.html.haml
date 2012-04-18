@@ -20,9 +20,10 @@
     %br
     = f.text_field :victim_email
   .field
-    = f.label :blackmail_will_be_exposed_in_how_many_minutes_from_now?
+    = f.label :specify_blackmail_expiration_time
     %br
-    = f.text_field :expired_at  
+    = f.date_select :expired_at  
+    = f.time_select :expired_at, :ignore_date => true  
   .field
     = fields_for :demands do |builder| 
       = builder.label 'List your demands. Use a new line to separate multiple demands.'
