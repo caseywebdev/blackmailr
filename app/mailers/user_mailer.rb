@@ -15,6 +15,14 @@ class UserMailer < ActionMailer::Base
     @victim_name = victim[:victim_name]    
     @victim_email = victim[:victim_email]
     @d_day = victim[:expired_at]
+    dm = victim.demands        
+    @victim_demands = []    
+    dm.each do |d|
+      @victim_demands.push(d[:description].to_s)
+    end
+    @victim_demands.join("\n")
+    puts "Inside the mailer"    
+    puts @victim_demands    
     @url = root_path
     #attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
     mail(:to => victim[:victim_email], :subject => "You've been blackmailed")

@@ -50,6 +50,8 @@ class BlackmailController < ApplicationController
                     #TODO: resize with rmagic before save
                  end
            end
+      # Tell the UserMailer to send a blackmail email after save
+      UserMailer.blackmail_email(@blackmail).deliver
       redirect_to :root
 
     else

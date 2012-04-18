@@ -10,22 +10,16 @@
   <body>
     <h1><%= @victim_name %>, you've been blackmailed through blackmailr.com</h1>
     <p>
-      Attached you will find a compromising photo.  If you choose not to comply to the below demands, this photo will be released for the world to see.
+      We have a compromising photo of you.  If you choose not to comply to the below demands, this photo will be released for the world to see.
     </p>
     <h2>Demands</h2>
-    <ol>
-      <%
-      # TODO: Parse demands list for pretty output
-      %>
-      <li>Demand 1</li>
-      <li>Demand 2</li>
-    </ol>
+    <p><%= @victim_demands %></p>
     <p>
       <strong>You must meet these demands before time runs out!</strong>
       <strong>D-day: <%= @d_day %></strong>
     </p>
     <p>
-      To meet the above demands and forestall your doom, follow this link: <url>.
+      To meet the above demands and forestall your doom, follow this link: <%= @url %>.
     </p>
     <p>
       If you are unable to meet the given demands and you know who is blackmailing you,<br/>
