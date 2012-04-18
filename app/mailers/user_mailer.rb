@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "admin@blackmailr.com"
+  default from: "not_your_day@blackmailr.com"
   
   # Send when new users sign up
   def welcome_email(user)

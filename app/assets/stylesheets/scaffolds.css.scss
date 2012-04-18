@@ -12,10 +12,6 @@ p, ol, ul, td {
   font-size: 13px;
   line-height: 18px; }
 
-form {
-  margin: 15px 25px;
-}
-
 table {
   margin: 15px 25px;
   border: solid 1px;
@@ -28,6 +24,7 @@ table thead tr{
 
 table tbody tr td{
 	border: solid 1px;
+  text-align: center;
 }
 
 pre {
@@ -46,6 +43,10 @@ a {
 div {
   &.field, &.actions {
     margin-bottom: 10px; } }
+
+form {
+  margin: 15px 25px 30px;
+}
 
 #notice {
   color: green; }

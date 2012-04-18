@@ -22,7 +22,9 @@
   .field
     = f.label :specify_blackmail_expiration_time
     %br
+    Date: 
     = f.date_select :expired_at  
+    Time:     
     = f.time_select :expired_at, :ignore_date => true  
   .field
     = fields_for :demands do |builder| 
@@ -36,3 +38,4 @@
       %br      
   .actions
     = f.submit "That's Blackmail!"
+  %br
