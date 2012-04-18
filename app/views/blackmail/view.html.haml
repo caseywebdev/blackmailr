@@ -9,8 +9,8 @@
     .title= @blackmail.title
   .main
     - 5.times do|k|
-      - @location = "#{Rails.root}/app/assets/images/blackmail/#{@blackmail.id}_#{k}.jpg"
-      - if(FileTest.exists?(@location))
+      - if(FileTest.exists?("#{Rails.root}/app/assets/images/blackmail/#{@blackmail.id}_#{k}.jpg"))
+        - @location = "/assets/blackmail/#{@blackmail.id}_#{k}.jpg"
         = image_tag @location
         %br
     .description= @blackmail.description
