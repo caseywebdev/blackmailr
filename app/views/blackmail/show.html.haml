@@ -3,9 +3,11 @@
 %table
   %thead
     %tr
-      %th(colspan = 5)
+      %th(colspan = 6)
         Blackmail List
     %tr
+      %th
+        
       %th
         Title
       %th
@@ -20,7 +22,9 @@
     %tbody
       %tr
         %td
-          =link_to black.title, { :controller => "blackmail", :action => "edit", :id => black.id }
+          =link_to 'EDIT', { :controller => "blackmail", :action => "edit", :id => black.id }
+        %td
+          =link_to black.title, { :controller => "blackmail", :action => "view", :id => black.id}
         %td
           =black.expired_at
         %td
@@ -28,4 +32,4 @@
         %td
           =black.description
         %td
-          %span.countdown{data: {'countdown-seconds' => (black.expired_at - Time.now)}}
+          %span.countdown{data: {'countdown-seconds' => (black.expired_at.to_i)}}
