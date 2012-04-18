@@ -4,6 +4,7 @@ class BlackmailController < ApplicationController
   def index
     #get all expired blackmails:
     @expired_blackmails = Blackmail.where("expired_at <= ?", DateTime.now)
+    #need to add condition: AND all demands are met
   end
    
   def view
@@ -66,17 +67,12 @@ class BlackmailController < ApplicationController
   
   def edit 
   	@blackmail=Blackmail.find_by_id(params[:id])
-    dm = @blackmail.demands        
-    @line = []    
-    dm.each do |d|
-      @line.push(d[:description].to_s)
-    end
-    @line.join("\n")
-    puts @line
+    @b_demands = @blackmail.demands
    	render 'edit'
   end
   
   def update
+    #save blackmail
     @blackmail = Blackmail.find_by_id(params[:id])
     if @blackmail.update_attributes(params[:blackmail])
       @blackmail.user_id = current_user.id
@@ -85,6 +81,18 @@ class BlackmailController < ApplicationController
       redirect_to :home
     else
       flash.now[:error] = 'Error occured when updating Blackmail'
+      render 'edit'
+    end
+    
+    #TODO: do I need to do something special to loop through the multiple demands checkboxes?
+    #save demands
+    @demands = Demand.find_by_blackmail_id(params[:id])
+    if @demands.update_attributes(params[:demands])
+      @demands.save
+      flash[:success] = "Demands updated."
+      redirect_to :home
+    else
+      flash.now[:error] = 'Error occured when updating Demands'
       render 'edit'
     end
   end

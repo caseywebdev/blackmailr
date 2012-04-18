@@ -27,10 +27,14 @@
     Time:
     = f.time_select :expired_at, :ignore_date => true 
   .field
+    = "Demands"
     %br
-    = f.label :concat_demands, 'Demands'
-    %br
-    = f.text_area :concat_demands, rows: 3
+    = fields_for :demands do |demand_field| 
+      - @b_demands.each do |d|
+        = demand_field.text_field :description, :value => d[:description].to_s
+        = demand_field.label :completed
+        = demand_field.check_box :completed, :value => d[:completed]
+        %br
   .field
     - 5.times do |i|
       = label_tag :blackmail_image

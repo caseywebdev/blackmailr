@@ -1,14 +1,10 @@
 TODO List
 
--reveal more and more of the images on blackmail#index as more and more time passes
-
--be able to mark individual demands as "completed"!
-
--see completion status at blackmail#view
+-change query on blackmail#index to only show images that don't have all demands completed 
 
 -blackmail#update is not working for me
-  error: unknown attribute: concat_demands
-  app/controllers/blackmail_controller.rb:81:in `update'
+  
+-reveal more and more of the images on blackmail#index as more and more time passes 
 
 -app/controllers/blackmail_controller.rb#create: 
 	resize uploaded images with rmagic before uploading them onto the server (save space)
