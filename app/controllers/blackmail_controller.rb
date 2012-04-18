@@ -60,7 +60,14 @@ class BlackmailController < ApplicationController
   
   def edit 
   	@blackmail=Blackmail.find_by_id(params[:id])
-  	render 'edit'
+    @demands = @blackmail.demands        
+    @line = []    
+    @demands.each do |d|
+      @line.push(d[:description].to_s)
+    end
+    @line.join("\n")
+    puts @line
+   	render 'edit'
   end
   
   def update
