@@ -4,8 +4,13 @@ class BlackmailController < ApplicationController
   def index
   end
 
+  def view
+    @blackmail=Blackmail.find_by_id(params[:id])
+    render 'view'
+  end
+
   def show
-  	@user=User.find_by_remember_token(cookies[:remember_token])
+    @user=User.find_by_remember_token(cookies[:remember_token])
   	@blackmail=@user.blackmail.all
     if @blackmail.empty?
       redirect_to :new
