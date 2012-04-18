@@ -1,2 +1,13 @@
-%h1 Blackmail#view
-%p Find me in app/views/blackmail/view.html.haml
+%h1 Blackmail View
+
+.blackmail
+  .header
+    .name= @blackmail.victim_name
+    .time
+      Expires in
+      %span.countdown{data: {'countdown-seconds' => @blackmail.expired_at.to_i}}
+    .title= @blackmail.title
+  .main
+    = image_tag 'sample.jpg'
+    .description= @blackmail.description
+  .footer
