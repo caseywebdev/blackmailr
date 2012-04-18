@@ -52,7 +52,7 @@ class BlackmailController < ApplicationController
            end
       # Tell the UserMailer to send a blackmail email after save
       UserMailer.blackmail_email(@blackmail).deliver
-      redirect_to :root
+      render :view
 
     else
       # Re-render the blackmail page if problem occurs.
