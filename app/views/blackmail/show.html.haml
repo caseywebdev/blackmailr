@@ -32,5 +32,10 @@
         %td
           =black.description
         %td
-          %span.countdown{data: {'countdown-seconds' => (black.expired_at.to_i)}}
+          - @time_left = DateTime.now - black.expired_at.to_datetime
+          - if(@time_left.to_i >= 0)
+            %span
+            ="EXPIRED"
+          - else
+            %span.countdown{data: {'countdown-seconds' => (black.expired_at.to_i)}}
 %br
