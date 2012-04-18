@@ -4,15 +4,6 @@ class BlackmailController < ApplicationController
   def index
     #get all expired blackmails:
     @expired_blackmails = Blackmail.where("expired_at >= ?", DateTime.now)
-    @expired_blackmails.each do |i|
-      puts "**********************"
-      puts i[:id]
-      5.times do|k|
-         @tempo = "#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"
-         if(@tempo)
-             puts "works"
-         end
-      end
     end
     
   end
