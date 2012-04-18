@@ -9,6 +9,7 @@ Blackmailr::Application.routes.draw do
   get 'home' => 'blackmail#show', as: :home
   get 'edit' => 'blackmail#edit', as: :edit 
   get 'new' => 'blackmail#new', as: :new
+  get 'view' => 'blackmail#view', as: :view
   
   constraints id: /[1-9][0-9]*/ do
     resources :users, except: [:index, :edit, :new]
