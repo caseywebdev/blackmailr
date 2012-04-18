@@ -8,7 +8,7 @@ class BlackmailController < ApplicationController
    
   def view
     @blackmail=Blackmail.find_by_id(params[:id])
-    render 'view'
+    @b_demands = @blackmail.demands        
   end
 
   def show

@@ -14,4 +14,13 @@
         = image_tag @location
         %br
     .description= @blackmail.description
+    %br
+    = "demands:"
+    %br
+    - @b_demands.each do |d|
+      = d[:description].to_s
+      %br
   .footer
+
+
+
