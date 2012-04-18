@@ -84,6 +84,13 @@ class BlackmailController < ApplicationController
       render 'edit'
     end
     
+#/* what I know:
+# * @b_demands = [#<Demand id: 1, blackmail_id: 1, description: "three", completed: false, updated_at: "2012-04-18 22:58:42">, #<Demand id: 2, blackmail_id: 1, description: "two", completed: false, updated_at: "2012-04-18 21:29:40">, #<Demand id: 3, blackmail_id: 1, description: "three", completed: false, updated_at: "2012-04-18 21:29:40">]
+# * @b_demands[1] =  #<Demand id: 2, blackmail_id: 1, description: "two", completed: false, updated_at: "2012-04-18 21:29:40">
+# * @b_demands[1].description = "two"
+# * demands descriptions currently being display (in edit.html.haml) as id="demands_[1].description" name="demands[[1].description]"
+# */  
+ 
     #TODO: do I need to do something special to loop through the multiple demands checkboxes?
     #save demands
     @demands = Demand.find_by_blackmail_id(params[:id])

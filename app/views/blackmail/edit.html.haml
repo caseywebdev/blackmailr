@@ -23,24 +23,24 @@
     = f.label :specify_blackmail_expiration_time
     %br
     Date:
-    = f.date_select :expired_at  
+    = f.date_select :expired_at
     Time:
-    = f.time_select :expired_at, :ignore_date => true 
+    = f.time_select :expired_at, :ignore_date => true
   .field
     = "Demands"
     %br
-    = fields_for :demands do |demand_field| 
+    = fields_for :demands do |demand_field|
       - @b_demands.each do |d|
-        = demand_field.text_field :description, :value => d[:description].to_s
+        = demand_field.text_field "[#{d[:id]}].description", :value => d[:description].to_s
         = demand_field.label :completed
-        = demand_field.check_box :completed, :value => d[:completed]
+        = demand_field.check_box "[#{d[:id]}].completed", :value => d[:completed]
         %br
   .field
     - 5.times do |i|
       = label_tag :blackmail_image
       %br
       = file_field_tag "images_#{i}", :accept => 'image/png,image/gif,image/jpeg'
-      %br      
+      %br
   .actions
     = f.submit "Update Blackmail!"
 %br
