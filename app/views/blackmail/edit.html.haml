@@ -27,12 +27,10 @@
     Time:
     = f.time_select :expired_at, :ignore_date => true 
   .field
-    - for i in 0..@count
-      = f.fields_for :demands, @blackmail.demands[i] do |builder|
-        %br
-        = builder.label 'Demand'
-        %br
-        = builder.text_field :description, rows: 3
+    %br
+    = f.label :concat_demands, 'Demands'
+    %br
+    = f.text_area :concat_demands, rows: 3
   .field
     - 5.times do |i|
       = label_tag :blackmail_image

@@ -21,7 +21,12 @@ class Blackmail < ActiveRecord::Base
   # Validations
   validates :victim_email, email: true
   validate :at_least_one_demand
-    
+  
+  # Concat demands
+  def concat_demands
+    demands.collect { |d| d.description }.join "\n"
+  end
+  
   private
   
   def at_least_one_demand
