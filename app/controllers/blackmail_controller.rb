@@ -68,17 +68,17 @@ class BlackmailController < ApplicationController
   def edit 
   	@blackmail=Blackmail.find_by_id(params[:id])
     @b_demands = @blackmail.demands
+    @user_id = current_user.id
    	render 'edit'
   end
   
   def update
     #save blackmail
     @blackmail = Blackmail.find_by_id(params[:id])
+    @blackmail.user_id = current_user.id    
     if @blackmail.update_attributes(params[:blackmail])
-      @blackmail.user_id = current_user.id
       @blackmail.save
       flash[:success] = "Blackmail updated."
-      redirect_to :home
     else
       flash.now[:error] = 'Error occured when updating Blackmail'
       render 'edit'
