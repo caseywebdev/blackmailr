@@ -7,6 +7,12 @@ class BlackmailController < ApplicationController
     @expired_blackmails.each do |i|
       puts "**********************"
       puts i[:id]
+      5.times do|k|
+         @tempo = "#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"
+         if(@tempo)
+             puts "works"
+         end
+      end
     end
     
   end

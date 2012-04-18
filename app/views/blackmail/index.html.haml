@@ -7,7 +7,11 @@
         %span.countdown{data: {'countdown-seconds' => 5.days.from_now.to_i}}
       .title #{i[:title]}
     .main
-      = image_tag 'sample.jpg'
+      - 5.times do|k|
+        - @location = "#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"
+        - if(FileTest.exists?(@location))
+          = image_tag @location
+          %br
       .description #{i[:description]}
     .footer
 .loading-more
