@@ -1,11 +1,27 @@
--app/controllers/blackmail_controller.rb#show: show the blackmail! take a look at the mock-up for an idea: http://blackmailr.herokuapp.com/assets/mockups/view.png
+TODO List, prioritized:
 
--app/views/blackmail/edit.html.haml:(Julian is working on this I think) display the 'edit blackmail' form, prepopulated with the information already stored in the database. The big difference between this and the 'new blackmail' form is instead of one big textbox for listing demands, each demand is seperated into their own text field with a "completed? checkbox
+-app/controllers/blackmail_controller.rb#show
+	show the blackmail! take a look at the mock-up for 
+	an idea: http://blackmailr.herokuapp.com/assets/mockups/view.png
 
--??? (idk where this goes): when blackmail expires, the information will be posted to the homepage, and the image will slowly be revealed (casey magic)
+-app/views/blackmail/edit.html.haml:
+	(Julian is working on this I think) display the 'edit blackmail' form, prepopulated with the information 
+	already stored in the database. The big difference between this and the 'new blackmail' form is instead 
+	of one big textbox for listing demands, each demand is seperated into their own text field with a 
+	"completed? checkbox
 
--app/views/blackmail/_form.html.haml: make a "add image" link to new blackmail form to add images dynamically. So instead of only being able to add just one image, we can add as many images as we want. When the "add image" link is clicked, another "browse" button appears, and so on.
+-??? (idk where this goes): 
+	when blackmail expires, the information will be posted to the homepage, and the image will slowly 
+	be revealed (casey magic)
 
--app/controllers/users_controller.rb#edit: user's profile will show.. list of blackmail sent? or maybe list of blackmail received? I'm not sure, actually..
+-app/views/blackmail/_form.html.haml: 
+	make a "add image" link to new blackmail form to add images dynamically. So instead of only being 
+	able to add just one image, we can add as many images as we want. When the "add image" link is clicked, 
+	another "browse" button appears, and so on.
 
--app/controllers/blackmail_controller.rb#create: resize uploaded images with rmagic before uploading them onto the server (save space)
+-app/controllers/users_controller.rb#edit: 
+	user's profile will show.. list of blackmail sent? or maybe list of blackmail received? 
+	I'm not sure, actually..
+
+-app/controllers/blackmail_controller.rb#create: 
+	resize uploaded images with rmagic before uploading them onto the server (save space)
