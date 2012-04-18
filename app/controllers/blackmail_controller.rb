@@ -65,7 +65,7 @@ class BlackmailController < ApplicationController
   def update
     @blackmail = Blackmail.find_by_id(params[:id])
     if @blackmail.update_attributes(params[:blackmail])
-      @blackmail.user_id = current_user
+      @blackmail.user_id = current_user.id
       @blackmail.save
       flash[:success] = "Blackmail updated."
       redirect_to :home
