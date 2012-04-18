@@ -4,10 +4,8 @@ class BlackmailController < ApplicationController
   def index
     #get all expired blackmails:
     @expired_blackmails = Blackmail.where("expired_at >= ?", DateTime.now)
-    end
-    
   end
-
+   
   def view
     @blackmail=Blackmail.find_by_id(params[:id])
     render 'view'
