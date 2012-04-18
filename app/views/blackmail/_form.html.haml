@@ -29,8 +29,10 @@
       = builder.label 'List your demands. Use a new line to separate multiple demands.'
       = builder.text_area :description, rows: 3  
   .field
-    = label_tag :blackmail_image
-    %br
-    = file_field_tag :img_location, :accept => 'image/png,image/gif,image/jpeg'      
+    - 5.times do |i|
+      = label_tag :blackmail_image
+      %br
+      = file_field_tag "images_#{i}", :accept => 'image/png,image/gif,image/jpeg'
+      %br      
   .actions
     = f.submit "That's Blackmail!"

@@ -28,27 +28,23 @@ class BlackmailController < ApplicationController
         .select { |s| not s.empty? }
         .each { |description| @blackmail.demands.new description: description }
     if @blackmail.save
+      puts "**************HELLO????"
       #upload image:
-            if(params[:img_location])
-                #get the picture from the form
-                upload = params[:img_location]
-                name =  "#{@blackmail.id}_0.jpg"
-                directory = "#{Rails.root}/app/assets/images/blackmail"
-                # create the file path
-                path = File.join(directory, name)
-                # write the file
-                File.open(path, 'wb') { |f| f.write upload.read }
-                #TODO: resize with rmagic before save
-             end
-      #send email:
-            # rl: Send blackmail_email after save
-            # Note that rails doesn't send email by default from development environment
-            # View console for confirmation that email is properly formed
-            puts 'Victim Email'+params[:blackmail][:victim_email]
-            UserMailer.blackmail_email(params[:blackmail]).deliver
-            
-            flash[:success] = 'Blackmail successfully sent!'
-      # TODO: Redirect user to list of all user blackmails
+          5.times do|i|
+                @temp_string = "images_#{i}"
+                puts @temp_string
+                if(params[:"#{@temp_string}"])
+                    #get the picture from the form
+                    upload = params[:"#{@temp_string}"]
+                    name =  "#{@blackmail.id}_#{i}.jpg"
+                    directory = "#{Rails.root}/app/assets/images/blackmail"
+                    # create the file path
+                    path = File.join(directory, name)
+                    # write the file
+                    File.open(path, 'wb') { |f| f.write upload.read }
+                    #TODO: resize with rmagic before save
+                 end
+           end
       redirect_to :root
 
     else
