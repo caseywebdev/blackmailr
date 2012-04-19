@@ -16,21 +16,20 @@
 
 class Blackmail < ActiveRecord::Base
   
-  # Scopes
-  scope :exposed, all(
-    conditions: [
-      "( 
-        SELECT COUNT(*)
-        FROM demands
-        WHERE blackmail_id = blackmail.id
-        AND completed = :true
-      ) < (
-        SELECT COUNT(*)
-        FROM demands
-        WHERE blackmail_id = blackmail.id
-      ) AND expired_at <= :now", true: true, now: 10.minutes.from_now
-    ], order: 'expired_at DESC'
-  )
+  scope :exposed,
+        conditions: [
+          "( 
+            SELECT COUNT(*)
+            FROM demands
+            WHERE blackmail_id = blackmail.id
+            AND completed = :true
+          ) < (
+            SELECT COUNT(*)
+            FROM demands
+            WHERE blackmail_id = blackmail.id
+          ) AND expired_at <= :now", true: true, now: 10.minutes.from_now
+        ],
+        order: 'expired_at DESC'
   
   # Relations  
   belongs_to :user
@@ -54,5 +53,22 @@ class Blackmail < ActiveRecord::Base
       errors.add :base, 'You must specify at least one demand.'
     end
   end
+  
+  #def self.exposed
+  #  all(
+  #    conditions: [
+  #      "( 
+  #        SELECT COUNT(*)
+  #        FROM demands
+  #        WHERE blackmail_id = blackmail.id
+  #        AND completed = :true
+  #      ) < (
+  #        SELECT COUNT(*)
+  #        FROM demands
+  #        WHERE blackmail_id = blackmail.id
+  #      ) AND expired_at <= :now", true: true, now: 10.minutes.from_now
+  #    ], order: 'expired_at DESC'
+  #  )
+  #end
   
 end
