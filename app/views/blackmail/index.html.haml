@@ -7,7 +7,7 @@
       .title #{i[:title]}
     .main
       - 5.times do|k|
-        - if(FileTest.exists?("#{Rails.root}/app/assets/images/blackmail/#{i[:id]}_#{k}.jpg"))
+        - if(File.exists?("#{Rails.root}/app/assets/images/blackmail/#{i.id}_#{k}.jpg"))
           - @location = "/assets/blackmail/#{i[:id]}_#{k}.jpg"
           = image_tag @location
           %br

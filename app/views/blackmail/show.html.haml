@@ -22,7 +22,7 @@
     %tbody
       %tr
         %td
-          = link_to 'Edit', blackmail, action: 'edit'
+          = link_to 'Edit', edit_blackmail_path(blackmail)
         %td
           = link_to blackmail.title, { :controller => "blackmail", :action => "view", :id => blackmail.id}
         %td
