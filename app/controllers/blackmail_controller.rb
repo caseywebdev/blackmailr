@@ -2,17 +2,20 @@ class BlackmailController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
-    @blackmails = Blackmail.where("
-      ( 
-        SELECT COUNT(*)
-        FROM demands
-        WHERE blackmail_id = blackmail.id
-        AND completed = :true
-      ) < (
-        SELECT COUNT(*)
-        FROM demands
-        WHERE blackmail_id = blackmail.id
-      ) AND expired_at <= :now", true: true, now: 5.minutes.from_now)
+    @blackmails = Blackmail.all(
+      conditions: [
+        "( 
+          SELECT COUNT(*)
+          FROM demands
+          WHERE blackmail_id = blackmail.id
+          AND completed = :true
+        ) < (
+          SELECT COUNT(*)
+          FROM demands
+          WHERE blackmail_id = blackmail.id
+        ) AND expired_at <= :now", true: true, now: 5.minutes.from_now
+      ], order: 'expired_at DESC'
+    )
   end
    
   def view
