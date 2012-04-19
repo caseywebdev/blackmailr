@@ -13,7 +13,6 @@ class BlackmailController < ApplicationController
         FROM demands
         WHERE blackmail_id = blackmail.id
       ) AND expired_at <= :now", true: true, now: 5.minutes.from_now)
-    return render text: BlackmailHelper.random_token
   end
    
   def view
