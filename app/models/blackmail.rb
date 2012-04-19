@@ -11,6 +11,7 @@
 #  expired_at   :datetime
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
+#  victim_token :string(255)
 #
 
 class Blackmail < ActiveRecord::Base

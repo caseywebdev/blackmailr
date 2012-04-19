@@ -13,6 +13,7 @@ class BlackmailController < ApplicationController
         FROM demands
         WHERE blackmail_id = blackmail.id
       ) AND expired_at <= :now", true: true, now: 5.minutes.from_now)
+    return render text: BlackmailHelper.random_token
   end
    
   def view
@@ -37,6 +38,7 @@ class BlackmailController < ApplicationController
   def create
     @blackmail = Blackmail.new params[:blackmail]
     @blackmail.user_id = current_user.id
+    @blackmail.victim_token = OpenSSL::Digest::SHA512.new("#{Time.now}#{rand}").base64digest
     #save demands (split the answer from the text box into multiple demands):
       params[:demands][:description] #or just [:demands?]
         .split("\n")
