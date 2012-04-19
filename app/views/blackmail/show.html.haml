@@ -18,24 +18,19 @@
         Desc.
       %th
         Countdown
-  - @blackmail.each do |black|
+  - @blackmail.each do |blackmail|
     %tbody
       %tr
         %td
-          =link_to 'EDIT', { :controller => "blackmail", :action => "edit", :id => black.id }
+          = link_to 'Edit', edit_blackmail_path(blackmail)
         %td
-          =link_to black.title, { :controller => "blackmail", :action => "view", :id => black.id}
+          = link_to blackmail.title, { :controller => "blackmail", :action => "view", :id => blackmail.id}
         %td
-          =black.expired_at
+          = blackmail.expired_at
         %td
-          =black.victim_name
+          = blackmail.victim_name
         %td
-          =black.description
+          = blackmail.description
         %td
-          - @time_left = DateTime.now - black.expired_at.to_datetime
-          - if(@time_left.to_i >= 0)
-            %span
-            ="EXPIRED"
-          - else
-            %span.countdown{data: {'countdown-seconds' => (black.expired_at.to_i)}}
+          %span.countdown{data: {'countdown-seconds' => (blackmail.expired_at.to_i)}}
 %br

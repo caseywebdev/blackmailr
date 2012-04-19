@@ -2,20 +2,7 @@ class BlackmailController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
-    @blackmails = Blackmail.all(
-      conditions: [
-        "( 
-          SELECT COUNT(*)
-          FROM demands
-          WHERE blackmail_id = blackmail.id
-          AND completed = :true
-        ) < (
-          SELECT COUNT(*)
-          FROM demands
-          WHERE blackmail_id = blackmail.id
-        ) AND expired_at <= :now", true: true, now: 5.minutes.from_now
-      ], order: 'expired_at DESC'
-    )
+    @blackmails = Blackmail.exposed
   end
    
   def view
@@ -65,7 +52,7 @@ class BlackmailController < ApplicationController
                  end
            end
       # Tell the UserMailer to send a blackmail email after save
-      UserMailer.blackmail_email(@blackmail).deliver
+      #UserMailer.blackmail_email(@blackmail).deliver
       
       #need to pass "@b_demands" to view after creation so view will know what your talking about
       @b_demands = @blackmail.demands

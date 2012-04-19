@@ -15,6 +15,23 @@
 #
 
 class Blackmail < ActiveRecord::Base
+  
+  # Scopes
+  scope :exposed, all(
+    conditions: [
+      "( 
+        SELECT COUNT(*)
+        FROM demands
+        WHERE blackmail_id = blackmail.id
+        AND completed = :true
+      ) < (
+        SELECT COUNT(*)
+        FROM demands
+        WHERE blackmail_id = blackmail.id
+      ) AND expired_at <= :now", true: true, now: 10.minutes.from_now
+    ], order: 'expired_at DESC'
+  )
+  
   # Relations  
   belongs_to :user
   has_many :demands, dependent: :delete_all

@@ -4,16 +4,10 @@
   .header
     .name= @blackmail.victim_name
     .time
-      Expires in
-      - @time_left = DateTime.now - @blackmail.expired_at.to_datetime
-      - if(@time_left.to_i <= 0)
-        %span
-        ="EXPIRED"
-      - else
-        %span.countdown{data: {'countdown-seconds' => @time_left.to_i}}
+      %span.countdown{data: {'countdown-seconds' => @blackmail.expired_at.to_i}}
     .title= @blackmail.title
   .main
-    - 5.times do|k|
+    - 5.times do |k|
       - if(FileTest.exists?("#{Rails.root}/app/assets/images/blackmail/#{@blackmail.id}_#{k}.jpg"))
         - @location = "/assets/blackmail/#{@blackmail.id}_#{k}.jpg"
         = image_tag @location
