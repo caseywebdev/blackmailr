@@ -29,12 +29,11 @@
   .field
     = "Demands"
     %br
-    = fields_for :demands do |demand_field|
-      - @b_demands.each do |d|
-        = demand_field.text_field "[#{d[:id]}].description", :value => d[:description].to_s
-        = demand_field.label :completed
-        = demand_field.check_box "[#{d[:id]}].completed", :value => d[:completed]
-        %br
+    = f.fields_for :demands do |d_f|
+      = d_f.text_field :description
+      = d_f.label :completed
+      = d_f.check_box :completed
+      %br
   .field
     - 5.times do |i|
       = label_tag :blackmail_image

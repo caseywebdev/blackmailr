@@ -17,11 +17,13 @@ class Blackmail < ActiveRecord::Base
   # Relations  
   belongs_to :user
   has_many :demands, dependent: :delete_all
-    
+  
   # Validations
   validates :victim_email, email: true
   validate :at_least_one_demand
   
+  accepts_nested_attributes_for :demands
+
   # Concat demands
   def concat_demands
     demands.collect { |d| d.description }.join "\n"
