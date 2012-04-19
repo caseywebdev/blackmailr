@@ -16,7 +16,7 @@
       #header
         - if signed_in?
           = link_to 'New', new_blackmail_path, class: 'push-state'
-          = link_to 'Blackmail', '/home', class: 'push-state'
+          = link_to 'My Blackmail', '/home', class: 'push-state'
           = link_to 'Sign out', '/sign-out', data: {method: 'post'}
         - else
           = link_to 'Sign up', '/sign-up'
