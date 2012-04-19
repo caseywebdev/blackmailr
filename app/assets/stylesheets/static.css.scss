@@ -21,20 +21,37 @@ a {
   text-align: right;
   background: image-url("logo.png") left center no-repeat;
   
-  a {
-    @include inline-block;
-    padding: 10px;
-    font-size: 12px;
-    font-weight: bold;
-    color: #fff;
-    background: $main-color $noise;
-    @include single-text-shadow;
-    @include single-box-shadow;
-    
-    &:active {
-      background-color: $main-color-dark;
+  .nav {
+    a {
+      @include inline-block;
+      padding: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      background: $main-color $noise;
+      @include single-text-shadow;
+      @include single-box-shadow;
+      
+      &:active {
+        background-color: $main-color-dark;
+      }
+      
     }
     
+  }
+  
+}
+
+#home-link {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 100px;
+  
+  &:hover {
+    background: none;
   }
   
 }
