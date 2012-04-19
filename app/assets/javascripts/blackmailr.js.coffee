@@ -12,9 +12,18 @@ if not Blackmailr? and Extrascore?
         $('.countdown').each ->
           $t = $ @
           s = -Math.floor (now - new Date $t.data('countdownSeconds')*1000)/1000
-          s -= (d = Math.floor s/(60*60*24))*(60*60*24)
-          s -= (h = Math.floor s/(60*60))*(60*60)
-          s -= (m = Math.floor s/60)*60
-          $t.html "#{d}d #{h}h #{m}m #{s}s"
+          if s <= 0
+            html = 'EXPIRED'
+          else
+            html = []
+            s -= (d = Math.floor s/(60*60*24))*(60*60*24)
+            html.push "#{d}d" if d or html.length
+            s -= (h = Math.floor s/(60*60))*(60*60)
+            html.push "#{d}h" if h or html.length
+            s -= (m = Math.floor s/60)*60
+            html.push "#{m}m" if m or html.length
+            html.push "#{s}s"
+            html = html.join ' '
+          $t.html html
         
   _.init Blackmailr

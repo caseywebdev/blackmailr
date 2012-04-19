@@ -3,13 +3,7 @@
     .header
       .name #{i[:victim_name]}
       .time
-        Expires in
-        - @time_left = DateTime.now - i[:expired_at].to_datetime
-        - if(@time_left.to_i <= 0)
-          %span
-          ="EXPIRED"
-        - else
-          %span.countdown{data: {'countdown-seconds' => @time_left.to_i}}
+        %span.countdown{data: {'countdown-seconds' => i.expired_at.to_i}}
       .title #{i[:title]}
     .main
       - 5.times do|k|
@@ -19,5 +13,5 @@
           %br
       .description #{i[:description]}
     .footer
-.loading-more
-  %div Loading more blackmail...
+-#.loading-more
+-#  %div Loading more blackmail...
