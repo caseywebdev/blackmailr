@@ -15,12 +15,8 @@ class UserMailer < ActionMailer::Base
     @victim_name = victim[:victim_name]    
     @victim_email = victim[:victim_email]
     @d_day = victim[:expired_at]
-    dm = victim.demands        
-    @victim_demands = []    
-    dm.each do |d|
-      @victim_demands.push(d[:description].to_s + "\n")
-    end
-    @victim_demands.join("\n")
+    dm = victim.demands      
+    @victim_demands = victim.demands.collect { |d| d.description }.join "\n"
     puts "Inside the mailer"    
     puts @victim_demands    
     @url  = user_url(victim, :host => :view.to_s) # Specifies named route
