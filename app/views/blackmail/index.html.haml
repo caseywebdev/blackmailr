@@ -1,4 +1,4 @@
-- @blackmails.each do |i|
+- Blackmail.exposed.each do |i|
   .blackmail
     .header
       .name #{i[:victim_name]}
@@ -9,7 +9,7 @@
       - 5.times do|k|
         - if(File.exists?("#{Rails.root}/app/assets/images/blackmail/#{i.id}_#{k}.jpg"))
           - @location = "/assets/blackmail/#{i[:id]}_#{k}.jpg"
-          = image_tag @location
+          = image_tag @location, class: 'countdown', data: {'countdown-seconds'=>i.expired_at.to_i}, style: 'visibility: hidden'
           %br
       .description #{i[:description]}
     .footer
