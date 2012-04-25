@@ -6,8 +6,9 @@ class BlackmailController < ApplicationController
   end
    
   def view
-    @blackmail=Blackmail.find_by_id(params[:id])
-    @b_demands = @blackmail.demands        
+    @blackmail = Blackmail.find_by_id(params[:id])
+    deny_access unless signed_in? && current_user.id == @blackmail.user_id or
+      params[:victim_token] == @blackmail.victim_token
   end
 
   def show
@@ -27,7 +28,7 @@ class BlackmailController < ApplicationController
   def create
     @blackmail = Blackmail.new params[:blackmail]
     @blackmail.user_id = current_user.id
-    @blackmail.victim_token = OpenSSL::Digest::SHA512.new("#{Time.now}#{rand}").base64digest
+    @blackmail.victim_token = OpenSSL::Digest::SHA512.new("#{Time.now}#{rand}").to_s
     #save demands (split the answer from the text box into multiple demands):
       params[:demands][:description] #or just [:demands?]
         .split("\n")
