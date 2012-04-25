@@ -16,7 +16,7 @@ class UserMailer < ActionMailer::Base
     @victim_email = blackmail[:victim_email]
     @d_day = blackmail[:expired_at]
     dm = blackmail.demands      
-    @victim_demands = blackmail.demands
+    @victim_demands = blackmail.demands.collect { |d| d.description }.join "<br/>"
     puts "Inside the mailer"    
     puts @victim_demands    
     @url  = view_url(blackmail)+'?victim_token='+blackmail.victim_token # Specifies named route

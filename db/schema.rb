@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120425172626) do
 
   create_table "messages", :force => true do |t|
     t.integer  "blackmail_id",                    :null => false
-    t.text     "content"
+    t.text     "message"
     t.boolean  "from_victim",  :default => false, :null => false
     t.datetime "created_at"
   end
