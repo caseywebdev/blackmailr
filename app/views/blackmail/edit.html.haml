@@ -1,0 +1,45 @@
+%h1 Edit Blackmail
+= form_for(@blackmail, :html => {:multipart => true}) do |f|
+  = render 'shared/error_messages', :object => f.object
+  .field
+    = f.hidden_field(:user_id, :value => @user_id)
+  .field
+    = f.label :title
+    %br
+    = f.text_field :title
+  .field
+    = f.label :description
+    %br
+    = f.text_area(:description, :rows => 3)
+  .field
+    = f.label :victim_name
+    %br
+    = f.text_field :victim_name
+  .field
+    = f.label :victim_email
+    %br
+    = f.text_field :victim_email
+  .field
+    = f.label :specify_blackmail_expiration_time
+    %br
+    Date:
+    = f.date_select :expired_at
+    Time:
+    = f.time_select :expired_at, :ignore_date => true
+  .field
+    = "Demands"
+    %br
+    = f.fields_for :demands do |d_f|
+      = d_f.text_field :description
+      = d_f.label :completed
+      = d_f.check_box :completed
+      %br
+  .field
+    - 5.times do |i|
+      = label_tag :blackmail_image
+      %br
+      = file_field_tag "images_#{i}", :accept => 'image/png,image/gif,image/jpeg'
+      %br
+  .actions
+    = f.submit "Update Blackmail!"
+%br

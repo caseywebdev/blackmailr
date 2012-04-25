@@ -1,0 +1,8 @@
+TODO List
+
+-change query on blackmail#index to only show images that don't have all demands completed 
+here are query instructions: http://guides.rubyonrails.org/active_record_querying.html#conditions
+
+-reveal more and more of the images on blackmail#index as more and more time passes
+
+-be able to mark individual demands as "completed" and it will save (blackmail#update)

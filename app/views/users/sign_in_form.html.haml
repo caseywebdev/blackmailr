@@ -1,0 +1,15 @@
+%h1 Sign in
+= form_for User.new, url: :sign_in do |f|
+  - if flash[:error]
+    #error_explanation= flash[:error]
+  .field
+    = f.label :email
+    %br
+    = f.text_field :email
+  .field
+    = f.label :password
+    %br
+    = f.password_field :password
+  .actions
+    = f.submit 'Sign in'
+%br

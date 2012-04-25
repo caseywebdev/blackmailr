@@ -1,0 +1,36 @@
+%h1 Home 
+
+%table
+  %thead
+    %tr
+      %th(colspan = 6)
+        Blackmail List
+    %tr
+      %th
+        
+      %th
+        Title
+      %th
+        Expires
+      %th
+        Victim
+      %th
+        Desc.
+      %th
+        Countdown
+  - @blackmail.each do |blackmail|
+    %tbody
+      %tr
+        %td
+          = link_to 'Edit', edit_blackmail_path(blackmail)
+        %td
+          = link_to blackmail.title, { :controller => "blackmail", :action => "view", :id => blackmail.id}
+        %td
+          = blackmail.expired_at
+        %td
+          = blackmail.victim_name
+        %td
+          = blackmail.description
+        %td
+          %span.countdown{data: {'countdown-seconds' => (blackmail.expired_at.to_i)}}
+%br

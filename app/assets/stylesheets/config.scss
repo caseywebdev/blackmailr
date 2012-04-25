@@ -1,0 +1,19 @@
+@import "compass";
+
+// Some globals for the site
+$main-color: #ad2f1a;
+$main-color-dark: darken($main-color, 10%);
+$main-color-light: lighten($main-color, 50%);
+$noise: image-url("noise.png");
+
+// Default text-shadow values
+$default-text-shadow-color: rgba(0, 0, 0, .5);
+$default-text-shadow-h-offset: 0;
+$default-text-shadow-v-offset: 1px;
+$default-text-shadow-blur: 1px;
+
+// Default box-shadow values
+$default-box-shadow-color: rgba(0, 0, 0, .5);
+$default-box-shadow-h-offset: 0;
+$default-box-shadow-v-offset: 1px;
+$default-box-shadow-blur: 5px;
