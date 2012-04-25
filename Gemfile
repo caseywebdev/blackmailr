@@ -26,9 +26,10 @@ gem 'pg', group: [:production]
 
 # Testing gems
 group :test do
+
   # Rspec & testing
-  gem 'rspec-rails'
   gem 'factory_girl_rails', '1.0'
+  gem 'rspec-rails'
   
   # Guard (better than autotest IMO)
   gem 'guard-bundler'
@@ -51,6 +52,7 @@ end
 
 # Asset handlers
 group :assets do
+
   # SCSS
   gem 'sass-rails'
   
