@@ -14,7 +14,7 @@ class BlackmailController < ApplicationController
     @user=User.find_by_remember_token(cookies[:remember_token])
   	@blackmail=@user.blackmail.all
     if @blackmail.empty?
-      redirect_to :new
+      redirect_to new_blackmail_path
     end
   end
   
