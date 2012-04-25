@@ -38,3 +38,5 @@ Help for group members:
 8. cd blackmailr *#or where ever it is*
 9. bundle --binstubs
 10. bin/rake db:migrate
+
+###Quick Test
