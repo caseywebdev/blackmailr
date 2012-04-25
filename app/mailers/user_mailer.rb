@@ -11,16 +11,16 @@ class UserMailer < ActionMailer::Base
   end
 
   # Send blackmail email to victim
-  def blackmail_email(victim)
-    @victim_name = victim[:victim_name]    
-    @victim_email = victim[:victim_email]
-    @d_day = victim[:expired_at]
-    dm = victim.demands      
-    @victim_demands = victim.demands.collect { |d| d.description }.join "\n"
+  def blackmail_email(blackmail)
+    @victim_name = blackmail[:victim_name]    
+    @victim_email = blackmail[:victim_email]
+    @d_day = blackmail[:expired_at]
+    dm = blackmail.demands      
+    @victim_demands = blackmail.demands.collect { |d| d.description }.join "<br/>"
     puts "Inside the mailer"    
     puts @victim_demands    
-    @url  = user_url(victim, :host => :view.to_s) # Specifies named route
+    @url  = view_url(blackmail)+'?victim_token='+blackmail.victim_token # Specifies named route
     #attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
-    mail(:to => victim[:victim_email], :subject => "You've been blackmailed")
+    mail(:to => blackmail[:victim_email], :subject => "You've been blackmailed")
   end
 end
