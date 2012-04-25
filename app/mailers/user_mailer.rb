@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "noreply@blackmailr.com"
+  default from: "noreply@blackmailr.heroku.com"
   
   # Send when new users sign up
   def welcome_email(user)
