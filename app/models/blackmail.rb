@@ -16,20 +16,22 @@
 
 class Blackmail < ActiveRecord::Base
   
-  scope :exposed,
-        conditions: [
-          "( 
-            SELECT COUNT(*)
-            FROM demands
-            WHERE blackmail_id = blackmail.id
-            AND completed = :true
-          ) < (
-            SELECT COUNT(*)
-            FROM demands
-            WHERE blackmail_id = blackmail.id
-          ) AND expired_at <= :now", true: true, now: 10.minutes.from_now
-        ],
-        order: 'expired_at DESC'
+  scope :exposed, lambda {
+    where(
+      "( 
+        SELECT COUNT(*)
+        FROM demands
+        WHERE blackmail_id = blackmail.id
+        AND completed = :true
+      ) < (
+        SELECT COUNT(*)
+        FROM demands
+        WHERE blackmail_id = blackmail.id
+      ) AND expired_at <= :now",
+        true: true,
+        now: 10.minutes.from_now
+    ).order('expired_at DESC')
+  }
   
   # Relations  
   belongs_to :user
