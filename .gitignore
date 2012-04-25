@@ -19,3 +19,6 @@
 
 # Ignore Rspec html results
 /spec/spec_results.html
+
+# Ignore the test images
+/app/assets/images/blackmail/*
