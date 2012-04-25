@@ -6,8 +6,9 @@ class BlackmailController < ApplicationController
   end
    
   def view
-    @blackmail=Blackmail.find_by_id(params[:id])
-    @b_demands = @blackmail.demands        
+    @blackmail = Blackmail.find_by_id(params[:id])
+    deny_access unless signed_in? && current_user.id == @blackmail.user_id or
+      params[:victim_token] == @blackmail.victim_token
   end
 
   def show
