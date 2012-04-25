@@ -27,18 +27,6 @@
       %br
     %em
       = "Demands must be met by time set. If demands are not met by that time, the description, victim's name, title, and all images will be posted to the front page. Thank you for your cooperation."
-    %h3 Add New Message
-    = form_for(@blackmail) do |f|
-      = render 'shared/error_messages', object: f.object
-      .field
-        = f.fields_for :messages do |m_f|
-          = m_f.label :message
-          = m_f.text_field :message
-          %br
-      .actions
-        = f.submit "Add Message"
-        %br
-    %h4 Negotiation History
   .footer
 
 
