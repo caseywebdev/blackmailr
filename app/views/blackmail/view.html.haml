@@ -17,16 +17,26 @@
     %strong
       = "demands:"
     %br
-    - @b_demands.each do |d|
-      = d[:description].to_s
+    - @blackmail.demands.each do |demand|
+      = demand[:description].to_s
       %strong
         %br
-        = " Completed? "
-        = d[:completed]
+        - if demand[:completed]
+          Completed
+        - else
+          Not completed
       %br
       %br
-    %em
-      = "Demands must be met by time set. If demands are not met by that time, the description, victim's name, title, and all images will be posted to the front page. Thank you for your cooperation."
+    - @blackmail.messages.each do |message|
+      = message.content
+      %br
+    = form_for [@blackmail, @blackmail.messages.new] do |f|
+      = f.label :content, 'Send a message'
+      %br
+      = f.text_area :content, cols: 40, rows: 5
+      %br
+      = f.submit 'Negotiate'
+    %em Demands must be met by time set. If demands are not met by that time, the description, victim's name, title, and all images will be posted to the front page. Thank you for your cooperation.
   .footer
 
 
