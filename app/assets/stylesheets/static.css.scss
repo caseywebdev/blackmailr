@@ -121,6 +121,9 @@ a {
       @include single-box-shadow;
       
       img {
+        display: block;
+        position: relative;
+        margin: 0 auto;
         max-width: 100%;
       }
       

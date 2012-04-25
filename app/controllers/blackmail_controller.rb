@@ -2,7 +2,6 @@ class BlackmailController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
-    @blackmails = Blackmail.exposed
   end
    
   def view
