@@ -66,6 +66,10 @@ GEM
     erubis (2.7.0)
     execjs (1.3.0)
       multi_json (~> 1.0)
+    factory_girl (1.3.3)
+    factory_girl_rails (1.0)
+      factory_girl (~> 1.3)
+      rails (>= 3.0.0.beta4)
     ffi (1.0.11)
     fssm (0.2.9)
     growl (1.0.3)
@@ -194,6 +198,7 @@ DEPENDENCIES
   capybara
   coffee-rails
   compass-rails
+  factory_girl_rails (= 1.0)
   growl
   guard-bundler
   guard-rspec
