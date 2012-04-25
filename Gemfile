@@ -26,8 +26,9 @@ gem 'pg', group: [:production]
 
 # Testing gems
 group :test do
-  # Rspec
+  # Rspec & testing
   gem 'rspec-rails'
+  gem 'factory_girl_rails', '1.0'
   
   # Guard (better than autotest IMO)
   gem 'guard-bundler'
