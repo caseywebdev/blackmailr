@@ -29,7 +29,6 @@ class BlackmailController < ApplicationController
     @blackmail.user_id = current_user.id
     @blackmail.victim_token = OpenSSL::Digest::SHA512.new("#{Time.now}#{rand}").to_s
     #save demands (split the answer from the text box into multiple demands):
-    p @blackmail.image.inspect
     params[:demands][:description] #or just [:demands?]
       .split("\n")
       .map(&:clean)
