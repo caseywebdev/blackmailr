@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     # Note: Unlike controllers, the mailer instance doesn’t have any context about the incoming request
     # Cite: http://guides.rubyonrails.org/action_mailer_basics.html#generating-urls-in-action-mailer-views
     @url  = sign_in_url
-    mail(:to => user.email, :subject => "Who says blackmail can't be fun?")
+    mail(:to => user.email, :subject => "Who says blackmail can't be fun, #{@user.email}?")
   end
 
   # Send blackmail email to victim
@@ -21,6 +21,6 @@ class UserMailer < ActionMailer::Base
     puts @victim_demands    
     @url  = blackmail.victim_view_url
     #attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
-    mail(:to => blackmail[:victim_email], :subject => "You've been blackmailed")
+    mail(:to => blackmail[:victim_email], :subject => "You've been blackmailed, #{@victim_name}")
   end
 end
