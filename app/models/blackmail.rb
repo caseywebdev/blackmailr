@@ -53,10 +53,6 @@ class Blackmail < ActiveRecord::Base
     "/view/#{id}?victim_token=#{victim_token}"
   end
   
-  def image= uploaded_file
-    self[:image] = uploaded_file.read
-  end
-  
   private
   
   def at_least_one_demand
