@@ -13,6 +13,11 @@ Blackmailr::Application.routes.draw do
   
   resources :blackmail, except: :index do
     resources :messages, only: :create
+    
+    member do
+      get 'image'
+    end
+    
   end
   
   # The priority is based upon order of creation:
