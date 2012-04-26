@@ -21,29 +21,33 @@ if not Blackmailr? and Extrascore?
             if w and h
               unless $t.data 'mask'
                 $t.data mask: $('<div>')
-                                .css(
-                                  background: '#000'
-                                  position: 'absolute'
-                                  width: w
-                                  lineHeight: h + 'px'
-                                  left: l
-                                  top: t
-                                  color: '#fff'
-                                  textAlign: 'center'
-                                  fontSize: 50
-                                ).appendTo $t.parent()
+                  .css(
+                    position: 'absolute'
+                    width: 600
+                    top: t
+                  ).appendTo $t.parent()
+                $('<div>')
+                  .css(
+                    background: '#000'
+                    width: w
+                    lineHeight: h + 'px'
+                    margin: '0 auto'
+                    color: '#fff'
+                    textAlign: 'center'
+                    fontSize: 50
+                  ).appendTo $t.data 'mask'
               $mask = $t.data 'mask'
               if s <= 0
                 $mask.remove()
               else
                 scalar = .75 + (s / (10 * 60)) * .25
                 $mask
+                  .css(top: t + (h - scalar * h) / 2)
+                  .find('> div')
                   .text(text)
                   .css
                     width: scalar * w
                     lineHeight: scalar * h + 'px'
-                    left: l + (w - scalar * w) / 2
-                    top: t + (h - scalar * h) / 2
               $t.css visibility: 'visible'
           else
             $t.text text
