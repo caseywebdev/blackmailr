@@ -35,6 +35,7 @@ if not Blackmailr? and Extrascore?
                     color: '#fff'
                     textAlign: 'center'
                     fontSize: 50
+                    whiteSpace: 'nowrap'
                   ).appendTo $t.data 'mask'
               $mask = $t.data 'mask'
               if s <= 0
