@@ -7,12 +7,10 @@
       %span.countdown{data: {'countdown-seconds' => @blackmail.expired_at.to_i}}
     .title= @blackmail.title
   .main
-    = image_tag image_blackmail_path(@blackmail), class: 'countdown', data: {'countdown-seconds'=>blackmail.expired_at.to_i}, style: 'visibility: hidden'
+    = image_tag image_blackmail_path @blackmail
     .description= @blackmail.description
     %br
-    %strong
-      = "demands:"
-    %br
+    %h2 Demands
     - @blackmail.demands.each do |demand|
       = demand[:description].to_s
       %strong

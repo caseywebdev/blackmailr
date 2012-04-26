@@ -18,7 +18,7 @@ class UsersController < ApplicationController
         #Handle a successful save.
         sign_in_cookies @user
         # Tell the UserMailer to send a welcome email after save
-        UserMailer.welcome_email(@user).deliver
+        UserMailer.welcome_email(@user).deliver rescue nil
         # Note that welcome_email returns a Mail::Message object to which deliver belongs
 
         #sign_in @user #after a new user signs up, log them in

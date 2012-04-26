@@ -29,7 +29,6 @@ class BlackmailController < ApplicationController
     @blackmail.user_id = current_user.id
     @blackmail.victim_token = OpenSSL::Digest::SHA512.new("#{Time.now}#{rand}").to_s
     #save demands (split the answer from the text box into multiple demands):
-    @blackmail.image = @blackmail.image.read
     params[:demands][:description] #or just [:demands?]
       .split("\n")
       .map(&:clean)
@@ -37,7 +36,7 @@ class BlackmailController < ApplicationController
       .each { |description| @blackmail.demands.new description: description }
     if @blackmail.save
       # Tell the UserMailer to send a blackmail email after save
-      UserMailer.blackmail_email(@blackmail).deliver
+      UserMailer.blackmail_email(@blackmail).deliver rescue nil
       
       #need to pass "@b_demands" to view after creation so view will know what your talking about
       render :view
@@ -57,24 +56,22 @@ class BlackmailController < ApplicationController
   def update
     #save blackmail
     @blackmail = Blackmail.find_by_id(params[:id])
-    @blackmail.user_id = current_user.id    
+    @blackmail.user_id = current_user.id
     if @blackmail.update_attributes(params[:blackmail])
       @blackmail.save
       flash[:success] = "Blackmail updated."
     else
       flash.now[:error] = 'Error occured when updating Blackmail'
-      render 'edit'
     end
 
     @demands = Demand.find_by_blackmail_id(params[:id])
     if @demands.update_attributes(params[:demands])
       @demands.save
       flash[:success] = "Demands updated."
-      redirect_to :home
     else
       flash.now[:error] = 'Error occured when updating Demands'
-      render 'edit'
     end
+    redirect_to edit_blackmail_path @blackmail
   end
 
   def destroy
