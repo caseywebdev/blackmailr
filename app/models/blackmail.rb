@@ -50,7 +50,7 @@ class Blackmail < ActiveRecord::Base
   end
   
   def victim_view_url
-    "/view/#{id}?victim_token=#{victim_token}"
+    "http://blackmailr.herokuapp.com/view/#{id}?victim_token=#{victim_token}"
   end
   
   def image= uploaded_file

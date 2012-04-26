@@ -18,6 +18,4 @@ ActionMailer::Base.smtp_settings = {
    :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
 }
 
-ActionMailer::Base.default_url_options[:host] = "blackmailr.heroku.com"
-
 ActionMailer::Base.raise_delivery_errors = true
