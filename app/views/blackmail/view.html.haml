@@ -29,7 +29,7 @@
       %br
     %h2 Negotiations
     - @blackmail.messages.each do |message|
-      %strong= message.from_victim ? message.victim_name : 'Blackmailer'
+      %strong= message.from_victim ? @blackmail.victim_name : 'Blackmailer'
       = "at #{message.created_at}"
       %br
       = message.content
