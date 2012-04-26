@@ -18,11 +18,8 @@ gem 'haml-rails'
 # Email validation
 gem 'validate_email'
 
-# SQLite
-gem 'sqlite3', group: [:development, :test]
-
 # PostgreSQL
-gem 'pg', group: [:production]
+gem 'pg'
 
 # Testing gems
 group :test do

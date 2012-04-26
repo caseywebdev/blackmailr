@@ -1,13 +1,17 @@
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: Blackmailr_development
   pool: 5
-  timeout: 5000
+  username: Blackmailr
+  password: dontblackmailme
 
 test:
-  adapter: sqlite3
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: Blackmailr_test
   pool: 5
-  timeout: 5000
+  username: Blackmailr
+  password: dontblackmailme
 
 # Heroku generates a production configuration for PostgreSQL automatically
