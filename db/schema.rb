@@ -11,21 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425172626) do
+ActiveRecord::Schema.define(:version => 20120426001808) do
 
-  create_table "blackmail", :force => true do |t|
-    t.integer  "user_id",      :null => false
-    t.string   "title",        :null => false
-    t.string   "description",  :null => false
-    t.string   "victim_name",  :null => false
-    t.string   "victim_email", :null => false
-    t.datetime "expired_at"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.string   "victim_token"
-  end
-
-  add_index "blackmail", ["user_id"], :name => "index_blackmail_on_user_id"
+# Could not dump table "blackmail" because of following StandardError
+#   Unknown type 'bytea' for column 'image'
 
   create_table "demands", :force => true do |t|
     t.integer  "blackmail_id",                    :null => false

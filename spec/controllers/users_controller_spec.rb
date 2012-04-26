@@ -12,7 +12,7 @@ describe "GET 'new'" do
 
   it "should have the right title" do
     get :new
-    response.should have_selector("h1", :content => "Sign up")
+    response.should have_content("h1", :content => "Sign up")
   end
 end
 
