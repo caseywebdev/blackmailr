@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   
   # Validations
   # email must not be blank, and must follow the email format
-  validates :email, email: true
+  validates :email, email: true, uniqueness: true
   has_secure_password
   
   before_save :create_remember_token

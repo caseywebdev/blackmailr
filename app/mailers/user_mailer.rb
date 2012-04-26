@@ -19,7 +19,7 @@ class UserMailer < ActionMailer::Base
     @victim_demands = blackmail.demands
     puts "Inside the mailer"    
     puts @victim_demands    
-    @url  = view_url(blackmail)+'?victim_token='+blackmail.victim_token # Specifies named route
+    @url  = blackmail.victim_view_url
     #attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
     mail(:to => blackmail[:victim_email], :subject => "You've been blackmailed")
   end

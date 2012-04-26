@@ -49,6 +49,10 @@ class Blackmail < ActiveRecord::Base
     demands.collect { |d| d.description }.join "\n"
   end
   
+  def victim_view_url
+    "/view/#{id}?victim_token=#{victim_token}"
+  end
+  
   private
   
   def at_least_one_demand
