@@ -2,6 +2,8 @@ class BlackmailController < ApplicationController
   before_filter :authenticate, :only => [:new, :create, :edit, :update]
   
   def index
+    @blackmail = Blackmail.exposed
+    render format: 'rss' if params[:format] == 'rss'
   end
    
   def view

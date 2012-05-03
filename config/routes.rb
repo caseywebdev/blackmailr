@@ -11,7 +11,7 @@ Blackmailr::Application.routes.draw do
   
   resources :users, except: [:index, :edit, :new]
   
-  resources :blackmail, except: :index do
+  resources :blackmail do
     resources :messages, only: :create
     
     member do

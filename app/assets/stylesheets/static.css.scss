@@ -159,7 +159,19 @@ a {
 #footer {
   padding: 10px;
   font-size: 12px;
-  color: #EEE;
+  color: #eee;
   text-align: center;
   @include single-text-shadow;
+  
+  a {
+    color: #eee;
+    font-size: 16px;
+    
+    &:hover {
+      color: #fff;
+      background: none;
+    }
+    
+  }
+  
 }

@@ -1,5 +1,5 @@
-- Blackmail.exposed.each do |blackmail|
-  .blackmail
+- @blackmail.each do |blackmail|
+  .blackmail{id: "b-#{blackmail.id}"}
     .header
       .name #{blackmail.victim_name}
       .time
@@ -10,5 +10,3 @@
       %br
       .description #{blackmail.description}
     .footer
--#.loading-more
--#  %div Loading more blackmail...
