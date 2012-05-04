@@ -3,7 +3,10 @@ class BlackmailController < ApplicationController
   
   def index
     @blackmail = Blackmail.exposed
-    render format: 'rss' if params[:format] == 'rss'
+    respond_to do |f|
+      f.html
+      f.rss
+    end
   end
    
   def view
