@@ -3,10 +3,6 @@ class BlackmailController < ApplicationController
   
   def index
     @blackmail = Blackmail.exposed
-    respond_to do |f|
-      f.html
-      f.rss
-    end
   end
    
   def view
